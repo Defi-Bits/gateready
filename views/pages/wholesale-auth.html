@@ -1,0 +1,25 @@
+<!-- WHOLESALE AUTH — vendor logged in -->
+<section class="wholesale-hero">
+  <div class="wholesale-inner">
+    <p class="eyebrow">Wholesale Pricing</p>
+    <h1 class="display-lg">Your Pricing Tiers.</h1>
+    <p style="color:#666;margin-bottom:32px;">Logged in as an approved GateReady vendor.</p>
+    <div style="display:flex;gap:16px;">
+      <a href="/vendor-portal" class="btn btn-primary btn-lg">Go to Dashboard</a>
+      <a href="/api/vendor/logout" class="btn btn-outline-white btn-lg">Log Out</a>
+    </div>
+  </div>
+</section>
+<section class="wholesale-pricing-section" id="pricing">
+  <div class="ws-pricing-inner">
+    <div class="section-header reveal">
+      <h2 class="section-title" style="color:var(--off-white);">Volume Tiers</h2>
+    </div>
+    <div id="tiersGrid" class="pricing-cards reveal"></div>
+  </div>
+</section>
+<script>
+const tiers = {{tiers_json}};
+const grid = document.getElementById('tiersGrid');
+if(grid&&tiers){grid.innerHTML=tiers.map((t,i)=>`<div class="pricing-card ${i===1?'featured':''}"><div><div class="pricing-qty">${t.qty}${t.qty===500?'+':''} bags</div><div class="pricing-unit">${t.label}</div></div><div class="pricing-price"><div class="pricing-per">$${t.per}</div><div class="pricing-per-label">per bag${t.total?` — $${t.total.toLocaleString()} total`:' — contact us'}</div></div></div>`).join('');}
+</script>
