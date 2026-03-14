@@ -1,0 +1,18 @@
+{
+  "event": "FIFA Futbol World Cup 2026",
+  "kickoff_date": "2026-06-11",
+  "policy": "All 11 US host venues require clear bags up to 12x6x12 inches.",
+  "venues": [
+    {"name": "MetLife Stadium", "city": "East Rutherford, NJ", "stage": "Final", "capacity": 82500},
+    {"name": "AT&T Stadium", "city": "Arlington, TX", "stage": "Semifinal", "capacity": 80000},
+    {"name": "Mercedes-Benz Stadium", "city": "Atlanta, GA", "stage": "Semifinal", "capacity": 71500},
+    {"name": "SoFi Stadium", "city": "Inglewood, CA", "stage": "Quarterfinal", "capacity": 70400},
+    {"name": "Hard Rock Stadium", "city": "Miami, FL", "stage": "Group Stage", "capacity": 65326},
+    {"name": "NRG Stadium", "city": "Houston, TX", "stage": "Group Stage", "capacity": 72220},
+    {"name": "Arrowhead Stadium", "city": "Kansas City, MO", "stage": "Group Stage", "capacity": 76416},
+    {"name": "Lincoln Financial Field", "city": "Philadelphia, PA", "stage": "Group Stage", "capacity": 69176},
+    {"name": "Levi's Stadium", "city": "Santa Clara, CA", "stage": "Group Stage", "capacity": 68500},
+    {"name": "Lumen Field", "city": "Seattle, WA", "stage": "Group Stage", "capacity": 69000},
+    {"name": "Gillette Stadium", "city": "Foxborough, MA", "stage": "Group Stage", "capacity": 65876}
+  ]
+}
