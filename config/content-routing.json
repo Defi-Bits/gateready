@@ -1,0 +1,7 @@
+{
+  "telegram": {
+    "enabled": true,
+    "target": "5000492604",
+    "batchPrefix": "🧠 Content Pipeline"
+  }
+}

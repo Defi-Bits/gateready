@@ -1,0 +1,27 @@
+{
+  "x": {
+    "maxChars": 280,
+    "maxHashtags": 2,
+    "style": "hook-first, concise, no fluff"
+  },
+  "linkedin": {
+    "maxChars": 3000,
+    "maxHashtags": 5,
+    "style": "insight-led, short paragraphs, professional"
+  },
+  "instagram": {
+    "maxChars": 2200,
+    "maxHashtags": 12,
+    "style": "caption-first, emotional pull, CTA"
+  },
+  "telegram": {
+    "maxChars": 4000,
+    "maxHashtags": 2,
+    "style": "clear, readable, useful"
+  },
+  "reddit": {
+    "maxChars": 10000,
+    "maxHashtags": 0,
+    "style": "direct, community-native, no promo spam"
+  }
+}

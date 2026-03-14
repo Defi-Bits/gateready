@@ -1,0 +1,55 @@
+{
+  "ts": "2026-03-12T06:06:05.028Z",
+  "windowDays": 7,
+  "venture": "edgeterminal",
+  "ventures": [
+    {
+      "venture": "edgeterminal",
+      "sample": 42,
+      "approveRate": 0.07142857142857142,
+      "rewriteRate": 0.42857142857142855,
+      "rejectRate": 0.5,
+      "avgScore": 48.976190476190474,
+      "avgConfidence": 0.606904761904762,
+      "topFailureTags": [
+        {
+          "tag": "Insufficient detail",
+          "count": 1
+        },
+        {
+          "tag": "keywordMissing",
+          "count": 1
+        },
+        {
+          "tag": "No clear call-to-action (CTA) in the post.",
+          "count": 1
+        },
+        {
+          "tag": "The post lacks a compelling reason for the audience to engage with it.",
+          "count": 1
+        },
+        {
+          "tag": "Lack of urgency",
+          "count": 1
+        },
+        {
+          "tag": "Insufficient proof of expertise",
+          "count": 1
+        },
+        {
+          "tag": "Weak Hook",
+          "count": 1
+        },
+        {
+          "tag": "Insufficient Market Fit",
+          "count": 1
+        }
+      ],
+      "recommendations": [
+        "Increase variant testing on top 3 themes.",
+        "Review top failure tags and patch rubric/prompt.",
+        "Promote challenger only if approval quality and confidence improve together."
+      ]
+    }
+  ]
+}

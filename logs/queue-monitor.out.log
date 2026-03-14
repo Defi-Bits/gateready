@@ -1,0 +1,6 @@
+[telegram] autoSelectFamily=true (default-node22)
+[telegram] global undici dispatcher autoSelectFamily=true
+[telegram] dnsResultOrder=ipv4first (default-node22)
+[telegram] autoSelectFamily=true (default-node22)
+[telegram] global undici dispatcher autoSelectFamily=true
+[telegram] dnsResultOrder=ipv4first (default-node22)

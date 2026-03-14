@@ -1,0 +1,36 @@
+{
+  "version": "2026-03-07.v1",
+  "windowHours": 24,
+  "ventures": {
+    "summit-exterior-services": {
+      "opportunitiesMin": 5,
+      "draftedMin": 3,
+      "qcApprovalRateMin": 0.7,
+      "publishSuccessRateMin": 0.9
+    },
+    "gateready": {
+      "opportunitiesMin": 6,
+      "draftedMin": 4,
+      "qcApprovalRateMin": 0.75,
+      "publishSuccessRateMin": 0.92
+    },
+    "edgeterminal": {
+      "opportunitiesMin": 6,
+      "draftedMin": 4,
+      "qcApprovalRateMin": 0.75,
+      "publishSuccessRateMin": 0.9
+    },
+    "african-storytime": {
+      "opportunitiesMin": 4,
+      "draftedMin": 3,
+      "qcApprovalRateMin": 0.8,
+      "publishSuccessRateMin": 0.95
+    },
+    "wholesale": {
+      "opportunitiesMin": 8,
+      "draftedMin": 5,
+      "qcApprovalRateMin": 0.7,
+      "publishSuccessRateMin": 0.9
+    }
+  }
+}

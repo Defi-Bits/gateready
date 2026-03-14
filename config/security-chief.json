@@ -1,0 +1,14 @@
+{
+  "identity": {
+    "name": "Security Chief",
+    "emoji": "🛡️",
+    "voice": "concise, risk-aware, action-first"
+  },
+  "routing": {
+    "channel": "telegram",
+    "target": "5000492604"
+  },
+  "alerts": {
+    "minSeverityForPush": "warn"
+  }
+}

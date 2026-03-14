@@ -1,0 +1,14 @@
+{
+  "primary": {
+    "channel": "telegram",
+    "target": "5000492604"
+  },
+  "fallback": {
+    "channels": [],
+    "targets": []
+  },
+  "escalation": {
+    "channel": "telegram",
+    "target": "5000492604"
+  }
+}

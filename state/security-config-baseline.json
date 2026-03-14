@@ -1,0 +1,30 @@
+{
+  "updated_at": "2026-03-14T13:20:00.134Z",
+  "files": {
+    "/Users/terminal/.openclaw/workspace/mission-control/scripts/route-config.json": {
+      "hash": "110c692957dfe4fe046f459ff88b23acc9cb47ff5d4cf6408c1a5a1ef0bd0c97",
+      "exists": true,
+      "checked_at": "2026-03-14T13:20:00.135Z"
+    },
+    "/Users/terminal/.openclaw/workspace/mission-control/config/security-chief.json": {
+      "hash": "88f5650f2ed60dfe96844e32ec7c0367695662aefa0335f824933b38f91cdaa5",
+      "exists": true,
+      "checked_at": "2026-03-14T13:20:00.135Z"
+    },
+    "/Users/terminal/.openclaw/workspace/mission-control/config/content-routing.json": {
+      "hash": "f989e74e37bf6b8a3f33dcdff97eca91b0fa95a923ea3d2ad7b62e9b0ed66dd7",
+      "exists": true,
+      "checked_at": "2026-03-14T13:20:00.135Z"
+    },
+    "/Users/terminal/.openclaw/workspace/shared-core/policies/runtime-control.json": {
+      "hash": "e919a1761edc4ed70f9ee50eeddfee5cfd411c945f49a47a7da846227bd3301e",
+      "exists": true,
+      "checked_at": "2026-03-14T13:20:00.135Z"
+    },
+    "/Users/terminal/.openclaw/workspace/mission-control/deploy/com.missioncontrol.queue-monitor.plist": {
+      "hash": "7c6f4d44d93faf4252c4e30be5229f5aca495a5444c4e36a0664938bf7e49d01",
+      "exists": true,
+      "checked_at": "2026-03-14T13:20:00.136Z"
+    }
+  }
+}

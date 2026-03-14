@@ -1,0 +1,25 @@
+{
+  "reports": {
+    "security-daily": {
+      "severity": "critical",
+      "primaryChannel": "webchat",
+      "fallbackChannels": ["telegram"],
+      "maxAttempts": 6,
+      "backoffMinutes": [2, 5, 15, 30, 60]
+    },
+    "ops-morning": {
+      "severity": "critical",
+      "primaryChannel": "webchat",
+      "fallbackChannels": ["telegram"],
+      "maxAttempts": 6,
+      "backoffMinutes": [2, 5, 15, 30, 60]
+    },
+    "ops-evening": {
+      "severity": "critical",
+      "primaryChannel": "webchat",
+      "fallbackChannels": ["telegram"],
+      "maxAttempts": 6,
+      "backoffMinutes": [2, 5, 15, 30, 60]
+    }
+  }
+}

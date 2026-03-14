@@ -1,0 +1,16 @@
+
+> mission-control@0.1.0 worker:outbound
+> tsx outbound-engine/run-worker.ts
+
+[outbound.worker] {
+  status: 'RETRY_SCHEDULED',
+  jobId: 'b287154c-214a-44be-a009-8b0688e309a6',
+  error: 'spawn openclaw ENOENT',
+  retryAt: '2026-03-07T16:24:50.740Z'
+}
+
+> mission-control@0.1.0 worker:outbound
+> tsx outbound-engine/run-worker.ts
+
+[outbound.worker] { status: 'DONE', jobId: 'b287154c-214a-44be-a009-8b0688e309a6' }
+[outbound.worker] { status: 'DONE', jobId: '29d247f3-82fd-448b-a845-b4e1482cfafc' }

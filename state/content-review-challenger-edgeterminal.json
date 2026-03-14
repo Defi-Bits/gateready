@@ -1,0 +1,22 @@
+{
+  "ts": "2026-03-12T06:06:05.004Z",
+  "venture": "edgeterminal",
+  "platform": "x",
+  "active": "champion",
+  "challenger": "challenger",
+  "activeRes": {
+    "ok": true,
+    "reviewed": 0,
+    "reason": "no_draft_renders",
+    "platform": "x",
+    "venture": "edgeterminal"
+  },
+  "challengerRes": {
+    "ok": true,
+    "reviewed": 0,
+    "reason": "no_draft_renders",
+    "platform": "x",
+    "venture": "edgeterminal"
+  },
+  "recommendation": "keep_active"
+}

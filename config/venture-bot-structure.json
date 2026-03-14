@@ -1,0 +1,253 @@
+{
+  "version": "2026-03-07.v1",
+  "execution": {
+    "defaultMode": "assist",
+    "pipeline": [
+      "ingest",
+      "plan",
+      "draft",
+      "qc",
+      "approve",
+      "publish",
+      "learn"
+    ],
+    "requireApprovalBeforeLive": true
+  },
+  "sharedInfrastructure": {
+    "twilio": {
+      "role": "transport",
+      "scope": [
+        "inbound_webhooks",
+        "outbound_send",
+        "delivery_status",
+        "escalation"
+      ],
+      "notes": "Twilio is cross-business infrastructure, not a venture."
+    }
+  },
+  "ventures": {
+    "summit-exterior-services": {
+      "label": "Summit Exterior Services",
+      "channels": [
+        "nextdoor",
+        "facebook_marketplace",
+        "seo_local"
+      ],
+      "bots": [
+        {
+          "id": "summit-listings-bot",
+          "name": "Summit Listings Bot",
+          "tasks": [
+            "create_listing_drafts",
+            "adapt_copy_by_channel",
+            "refresh_expired_listings"
+          ],
+          "mode": "assist"
+        },
+        {
+          "id": "summit-local-seo-bot",
+          "name": "Summit Local SEO Bot",
+          "tasks": [
+            "city_service_keyword_map",
+            "create_service_page_briefs",
+            "gbp_post_drafts"
+          ],
+          "mode": "assist"
+        },
+        {
+          "id": "summit-lead-followup-bot",
+          "name": "Summit Lead Follow-up Bot",
+          "tasks": [
+            "new_lead_reply_drafts",
+            "followup_sequence",
+            "stale_lead_reactivation"
+          ],
+          "mode": "assist"
+        }
+      ]
+    },
+    "gateready": {
+      "label": "GateReady",
+      "productLines": [
+        "clear-stadium-bags"
+      ],
+      "channels": [
+        "ecommerce",
+        "seo",
+        "outreach",
+        "social"
+      ],
+      "bots": [
+        {
+          "id": "gateready-ecom-bot",
+          "name": "GateReady Ecom Bot",
+          "tasks": [
+            "pdp_copy_tests",
+            "checkout_qa",
+            "conversion_hypotheses"
+          ],
+          "mode": "assist"
+        },
+        {
+          "id": "gateready-seo-bot",
+          "name": "GateReady SEO Bot",
+          "tasks": [
+            "policy_intent_clusters",
+            "guide_content_briefs",
+            "metadata_updates"
+          ],
+          "mode": "assist"
+        },
+        {
+          "id": "gateready-distributor-outreach-bot",
+          "name": "GateReady Distributor Outreach Bot",
+          "tasks": [
+            "regional_targeting",
+            "pitch_variants",
+            "followup_sequences"
+          ],
+          "mode": "assist"
+        },
+        {
+          "id": "gateready-social-content-bot",
+          "name": "GateReady Social/Content Bot",
+          "tasks": [
+            "content_variants",
+            "approval_queue_prep",
+            "publish_packaging"
+          ],
+          "mode": "assist"
+        },
+        {
+          "id": "gateready-vendor-ops-bot",
+          "name": "GateReady Vendor Ops Bot",
+          "tasks": [
+            "vendor_onboarding",
+            "reorder_reminders",
+            "vendor_health_summaries"
+          ],
+          "mode": "assist"
+        }
+      ]
+    },
+    "edgeterminal": {
+      "label": "EdgeTerminal",
+      "channels": [
+        "twitter",
+        "reddit",
+        "outreach"
+      ],
+      "bots": [
+        {
+          "id": "edgeterminal-x-bot",
+          "name": "EdgeTerminal X Bot",
+          "tasks": [
+            "scan_mentions",
+            "draft_replies",
+            "approval_publish"
+          ],
+          "mode": "assist"
+        },
+        {
+          "id": "edgeterminal-reddit-bot",
+          "name": "EdgeTerminal Reddit Bot",
+          "tasks": [
+            "subreddit_research",
+            "draft_posts_comments",
+            "response_tracking"
+          ],
+          "mode": "assist"
+        },
+        {
+          "id": "edgeterminal-engagement-bot",
+          "name": "EdgeTerminal Engagement Bot",
+          "tasks": [
+            "intent_triage",
+            "queue_responses",
+            "feedback_capture"
+          ],
+          "mode": "assist"
+        }
+      ]
+    },
+    "african-storytime": {
+      "label": "African Storytime",
+      "channels": [
+        "youtube",
+        "tiktok",
+        "twitter"
+      ],
+      "bots": [
+        {
+          "id": "storytime-content-bot",
+          "name": "Storytime Content Bot",
+          "tasks": [
+            "episode_ideas",
+            "script_drafts",
+            "caption_variants"
+          ],
+          "mode": "assist"
+        },
+        {
+          "id": "storytime-distribution-bot",
+          "name": "Storytime Distribution Bot",
+          "tasks": [
+            "platform_formatting",
+            "publish_queue_prep",
+            "scheduling_support"
+          ],
+          "mode": "assist"
+        },
+        {
+          "id": "storytime-community-bot",
+          "name": "Storytime Community Bot",
+          "tasks": [
+            "reply_drafts",
+            "audience_prompts",
+            "comment_summaries"
+          ],
+          "mode": "assist"
+        }
+      ]
+    },
+    "wholesale": {
+      "label": "Wholesale",
+      "channels": [
+        "sms",
+        "email"
+      ],
+      "bots": [
+        {
+          "id": "wholesale-prospecting-bot",
+          "name": "Wholesale Prospecting Bot",
+          "tasks": [
+            "account_discovery",
+            "segmentation",
+            "priority_scoring"
+          ],
+          "mode": "assist"
+        },
+        {
+          "id": "wholesale-outreach-bot",
+          "name": "Wholesale Outreach Bot",
+          "tasks": [
+            "intro_sequences",
+            "followup_sequences",
+            "meeting_prompt_drafts"
+          ],
+          "mode": "assist"
+        },
+        {
+          "id": "wholesale-crm-hygiene-bot",
+          "name": "Wholesale CRM Hygiene Bot",
+          "tasks": [
+            "stale_lead_nudges",
+            "stage_cleanups",
+            "pipeline_weekly_summary"
+          ],
+          "mode": "assist"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,75 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+state/report-baseline.json
+state/alerts/
+state/security-chief-inbox.jsonl
+state/outreach-events.jsonl
+state/outreach-plan.jsonl
+state/outreach-drafts.jsonl
+state/outreach-approvals.jsonl
+state/outreach-published.jsonl
+logs/queue-health.jsonl
+logs/security-chief-*.log
+logs/twitter-orchestrator*.log
+state/twitter-seen-tweets.json
+state/twitter-runtime.json
+state/site-latest.json
+state/site-snapshots.jsonl
+state/content-queue.jsonl
+state/content-last-hash.json
+state/content-twitter-hashes.json
+state/omnichannel-review.jsonl
+state/omnichannel-index.json
+state/learning-feedback.jsonl
+state/outreach-qc.jsonl
+state/outreach-qc-sector.jsonl
+state/engagement-inbox.jsonl
+state/engagement-memory.json
+state/engagement-manual.jsonl
+state/context-pack-*.json
+state/bot-handoffs.jsonl
+artifacts/twitter-manual-relay.md
+logs/content-orchestrator*.log
+logs/engagement*.log
+logs/edgeterminal-seed*.log
+logs/gateready-seed*.log
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

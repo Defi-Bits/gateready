@@ -1,0 +1,15 @@
+{
+  "ts": "2026-03-12T06:04:52.453Z",
+  "venture": "edgeterminal",
+  "platform": "x",
+  "sample": 42,
+  "approveRate": 0.07142857142857142,
+  "rewriteRate": 0.42857142857142855,
+  "rejectRate": 0.5,
+  "avgScore": 48.976190476190474,
+  "avgConfidence": 0.606904761904762,
+  "driftVsFirstHalf": {
+    "scoreDelta": 3.761904761904759,
+    "confidenceDelta": -0.017619047619047534
+  }
+}

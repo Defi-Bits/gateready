@@ -1,0 +1,9 @@
+job_id,job_type,status,attempts,run_at,last_error
+9d7be345-2f7f-44e1-a66e-73d7b5c4f138,OutboundSendRequested,DEAD,5,2026-03-03T20:41:43.985Z,twilio_send_failed:missing_twilio_credentials
+dca3eaf4-c9db-45cf-bf30-6a96af024bc1,CriticalReportDispatch,FAILED,1,2026-03-01T16:37:16.683Z,unsupported_job_type:CriticalReportDispatch
+72ea283e-70e1-48f9-88e3-c7713f5e944a,CriticalReportDispatch,FAILED,1,2026-03-01T16:26:37.471Z,unsupported_job_type:CriticalReportDispatch
+6880b7d0-e4f8-4f74-99c6-e4c50e093e78,CriticalReportDispatch,FAILED,1,2026-03-01T16:22:41.716Z,unsupported_job_type:CriticalReportDispatch
+39074e3f-fcb9-4237-b255-f86428aabe24,OutboundSendRequested,FAILED,1,2026-02-28T19:08:48.668Z,"twilio_send_failed:The 'To' number +15551230000 is not a valid phone number."
+manual-send-84406d69,OutboundSendRequested,FAILED,1,2026-02-28T18:14:11Z,twilio_send_failed:missing_twilio_credentials
+send-job-1,OutboundSendRequested,FAILED,1,"2026-02-28 07:05:35",twilio_send_failed:missing_twilio_credentials
+d9bcedd9-773a-46c7-8da2-cd4dbb8c00cf,EscalationRequested,FAILED,1,2026-02-27T18:37:27.183Z,unsupported_job_type:EscalationRequested

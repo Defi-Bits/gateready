@@ -1,0 +1,17 @@
+{
+  "summit": {
+    "postsPerDay": 1,
+    "categories": ["before_after", "local_tip", "trust_proof"],
+    "channels": ["facebook", "instagram"]
+  },
+  "gateready": {
+    "postsPerDay": 2,
+    "categories": ["product_asset", "policy_clarity", "ugc"],
+    "channels": ["instagram", "x", "tiktok"]
+  },
+  "edgeterminal": {
+    "postsPerDay": 1,
+    "categories": ["insight", "chart", "report_snippet"],
+    "channels": ["x", "linkedin"]
+  }
+}

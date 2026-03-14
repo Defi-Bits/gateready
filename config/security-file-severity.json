@@ -1,0 +1,10 @@
+{
+  "default": "warn",
+  "files": {
+    "/Users/terminal/.openclaw/workspace/shared-core/policies/runtime-control.json": "critical",
+    "/Users/terminal/.openclaw/workspace/mission-control/deploy/com.missioncontrol.queue-monitor.plist": "critical",
+    "/Users/terminal/.openclaw/workspace/mission-control/config/security-chief.json": "critical",
+    "/Users/terminal/.openclaw/workspace/mission-control/scripts/route-config.json": "warn",
+    "/Users/terminal/.openclaw/workspace/mission-control/config/content-routing.json": "warn"
+  }
+}

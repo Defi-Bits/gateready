@@ -1,0 +1,5 @@
+/Users/terminal/.openclaw/workspace/mission-control/scripts/monitor-queue.sh:16: command not found: openclaw
+[telegram] message failed: Call to 'sendMessage' failed! (400: Bad Request: chat not found)
+Error: Telegram send failed: chat not found (chat_id=5000537992). Likely: bot not started in DM, bot removed from group/channel, group migrated (new -100… id), or wrong bot token. Input was: "telegram:5000537992".
+[telegram] message failed: Call to 'sendMessage' failed! (400: Bad Request: chat not found)
+Error: Telegram send failed: chat not found (chat_id=5000537992). Likely: bot not started in DM, bot removed from group/channel, group migrated (new -100… id), or wrong bot token. Input was: "telegram:5000537992".

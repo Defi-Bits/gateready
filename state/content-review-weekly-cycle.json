@@ -1,0 +1,66 @@
+{
+  "ts": "2026-03-12T06:06:05.330Z",
+  "ventures": [
+    {
+      "venture": "edgeterminal",
+      "challenger": {
+        "ok": true,
+        "outPath": "/Users/terminal/.openclaw/workspace/mission-control/state/content-review-challenger-edgeterminal.json",
+        "recommendation": "keep_active"
+      },
+      "weekly": {
+        "ok": true,
+        "venture": "edgeterminal",
+        "sample": 42,
+        "outJson": "/Users/terminal/.openclaw/workspace/mission-control/state/content-review-reports/weekly-edgeterminal.json",
+        "outMd": "/Users/terminal/.openclaw/workspace/reports/CONTENT_REVIEW_WEEKLY_EDGETERMINAL.md"
+      }
+    },
+    {
+      "venture": "gateready",
+      "challenger": {
+        "ok": true,
+        "outPath": "/Users/terminal/.openclaw/workspace/mission-control/state/content-review-challenger-gateready.json",
+        "recommendation": "keep_active"
+      },
+      "weekly": {
+        "ok": true,
+        "venture": "gateready",
+        "sample": 0,
+        "outJson": "/Users/terminal/.openclaw/workspace/mission-control/state/content-review-reports/weekly-gateready.json",
+        "outMd": "/Users/terminal/.openclaw/workspace/reports/CONTENT_REVIEW_WEEKLY_GATEREADY.md"
+      }
+    },
+    {
+      "venture": "african-storytime",
+      "challenger": {
+        "ok": true,
+        "outPath": "/Users/terminal/.openclaw/workspace/mission-control/state/content-review-challenger-african-storytime.json",
+        "recommendation": "keep_active"
+      },
+      "weekly": {
+        "ok": true,
+        "venture": "african-storytime",
+        "sample": 0,
+        "outJson": "/Users/terminal/.openclaw/workspace/mission-control/state/content-review-reports/weekly-african-storytime.json",
+        "outMd": "/Users/terminal/.openclaw/workspace/reports/CONTENT_REVIEW_WEEKLY_AFRICAN-STORYTIME.md"
+      }
+    },
+    {
+      "venture": "wholesale",
+      "challenger": {
+        "ok": true,
+        "outPath": "/Users/terminal/.openclaw/workspace/mission-control/state/content-review-challenger-wholesale.json",
+        "recommendation": "keep_active"
+      },
+      "weekly": {
+        "ok": true,
+        "venture": "wholesale",
+        "sample": 0,
+        "outJson": "/Users/terminal/.openclaw/workspace/mission-control/state/content-review-reports/weekly-wholesale.json",
+        "outMd": "/Users/terminal/.openclaw/workspace/reports/CONTENT_REVIEW_WEEKLY_WHOLESALE.md"
+      }
+    }
+  ],
+  "ok": true
+}

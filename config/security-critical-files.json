@@ -1,0 +1,9 @@
+{
+  "files": [
+    "/Users/terminal/.openclaw/workspace/mission-control/scripts/route-config.json",
+    "/Users/terminal/.openclaw/workspace/mission-control/config/security-chief.json",
+    "/Users/terminal/.openclaw/workspace/mission-control/config/content-routing.json",
+    "/Users/terminal/.openclaw/workspace/shared-core/policies/runtime-control.json",
+    "/Users/terminal/.openclaw/workspace/mission-control/deploy/com.missioncontrol.queue-monitor.plist"
+  ]
+}

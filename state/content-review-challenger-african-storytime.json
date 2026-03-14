@@ -1,0 +1,22 @@
+{
+  "ts": "2026-03-12T06:06:05.201Z",
+  "venture": "african-storytime",
+  "platform": "x",
+  "active": "champion",
+  "challenger": "challenger",
+  "activeRes": {
+    "ok": true,
+    "reviewed": 0,
+    "reason": "no_draft_renders",
+    "platform": "x",
+    "venture": "african-storytime"
+  },
+  "challengerRes": {
+    "ok": true,
+    "reviewed": 0,
+    "reason": "no_draft_renders",
+    "platform": "x",
+    "venture": "african-storytime"
+  },
+  "recommendation": "keep_active"
+}

@@ -1,0 +1,38 @@
+{
+  "WHOLESALE": {
+    "timezone": "America/New_York",
+    "allowed_send_windows": [{ "days": [1, 2, 3, 4, 5, 6], "start": "09:00", "end": "19:00" }],
+    "daily_send_cap": 8000,
+    "per_number_cap": 220,
+    "micro_campaign_size": { "min": 500, "max": 1000 },
+    "cadence_steps": [
+      { "step": 0, "delay_hours": 0, "template_ids": ["w_s0_a", "w_s0_b", "w_s0_c", "w_s0_d", "w_s0_e"] },
+      { "step": 1, "delay_hours": 24, "template_ids": ["w_s1_a", "w_s1_b", "w_s1_c", "w_s1_d", "w_s1_e"] },
+      { "step": 2, "delay_hours": 72, "template_ids": ["w_s2_a", "w_s2_b", "w_s2_c", "w_s2_d", "w_s2_e"] }
+    ],
+    "autopause_thresholds": {
+      "stop_rate": 0.02,
+      "negative_rate": 0.08,
+      "deliverability_drop": 0.2
+    },
+    "escalation_thresholds": { "hot_intent_score": 0.75, "keywords": ["offer", "price", "call me"] },
+    "confirmation_policy": { "send_opt_out_confirmation": true },
+    "twilio": { "messaging_service_sid": "MGxxxxxxxx", "status_webhook": "/twilio/sms/status", "inbound_webhook": "/twilio/sms/inbound" }
+  },
+  "AGENCY": {
+    "timezone": "America/New_York",
+    "daily_send_cap": 1200,
+    "per_number_cap": 100,
+    "escalation_thresholds": { "hot_intent_score": 0.82 }
+  },
+  "SUMMIT": {
+    "timezone": "America/New_York",
+    "daily_send_cap": 1500,
+    "per_number_cap": 150,
+    "escalation_thresholds": { "hot_intent_score": 0.7 }
+  },
+  "EDGE": {
+    "enabled": false,
+    "note": "Reserved for research/content hooks"
+  }
+}

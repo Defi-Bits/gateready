@@ -1,0 +1,21 @@
+{
+  "version": "2026-03-07.v1",
+  "workers": [
+    {
+      "id": "security-worker-1",
+      "name": "Security Worker 1",
+      "enabled": true,
+      "handlesSeverities": ["critical", "warn", "info"],
+      "maxOpenAssignments": 3,
+      "capabilities": [
+        "investigation",
+        "config_patch_proposal",
+        "evidence_collection",
+        "verification"
+      ]
+    }
+  ],
+  "approvalFlow": ["chief", "zuri", "user"],
+  "autoAssign": true,
+  "notifyOnAssignment": true
+}

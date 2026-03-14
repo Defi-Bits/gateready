@@ -1,0 +1,149 @@
+{
+  "ts": "2026-03-07T16:16:13.879Z",
+  "windowHours": 24,
+  "counts": {
+    "opportunities": 0,
+    "drafted": 0,
+    "qcChecked": 3,
+    "approved": 3,
+    "published": 12,
+    "failed": 0
+  },
+  "rates": {
+    "qcApprovalRate": 1,
+    "publishSuccessRate": 1
+  },
+  "venturesTracked": 5,
+  "byVenture": {
+    "summit-exterior-services": {
+      "counts": {
+        "opportunities": 0,
+        "drafted": 0,
+        "qcChecked": 0,
+        "approved": 0,
+        "published": 0,
+        "failed": 0
+      },
+      "rates": {
+        "qcApprovalRate": null,
+        "publishSuccessRate": null
+      },
+      "targets": {
+        "opportunitiesMin": 5,
+        "draftedMin": 3,
+        "qcApprovalRateMin": 0.7,
+        "publishSuccessRateMin": 0.9
+      },
+      "status": {
+        "opportunities": "below_target",
+        "drafted": "below_target",
+        "qcApprovalRate": "unknown",
+        "publishSuccessRate": "unknown"
+      }
+    },
+    "gateready": {
+      "counts": {
+        "opportunities": 0,
+        "drafted": 0,
+        "qcChecked": 0,
+        "approved": 0,
+        "published": 5,
+        "failed": 0
+      },
+      "rates": {
+        "qcApprovalRate": null,
+        "publishSuccessRate": 1
+      },
+      "targets": {
+        "opportunitiesMin": 6,
+        "draftedMin": 4,
+        "qcApprovalRateMin": 0.75,
+        "publishSuccessRateMin": 0.92
+      },
+      "status": {
+        "opportunities": "below_target",
+        "drafted": "below_target",
+        "qcApprovalRate": "unknown",
+        "publishSuccessRate": "on_track"
+      }
+    },
+    "edgeterminal": {
+      "counts": {
+        "opportunities": 0,
+        "drafted": 0,
+        "qcChecked": 3,
+        "approved": 3,
+        "published": 7,
+        "failed": 0
+      },
+      "rates": {
+        "qcApprovalRate": 1,
+        "publishSuccessRate": 1
+      },
+      "targets": {
+        "opportunitiesMin": 6,
+        "draftedMin": 4,
+        "qcApprovalRateMin": 0.75,
+        "publishSuccessRateMin": 0.9
+      },
+      "status": {
+        "opportunities": "below_target",
+        "drafted": "below_target",
+        "qcApprovalRate": "on_track",
+        "publishSuccessRate": "on_track"
+      }
+    },
+    "african-storytime": {
+      "counts": {
+        "opportunities": 0,
+        "drafted": 0,
+        "qcChecked": 0,
+        "approved": 0,
+        "published": 0,
+        "failed": 0
+      },
+      "rates": {
+        "qcApprovalRate": null,
+        "publishSuccessRate": null
+      },
+      "targets": {
+        "opportunitiesMin": 4,
+        "draftedMin": 3,
+        "qcApprovalRateMin": 0.8,
+        "publishSuccessRateMin": 0.95
+      },
+      "status": {
+        "opportunities": "below_target",
+        "drafted": "below_target",
+        "qcApprovalRate": "unknown",
+        "publishSuccessRate": "unknown"
+      }
+    },
+    "wholesale": {
+      "counts": {
+        "opportunities": 0,
+        "drafted": 0,
+        "qcChecked": 0,
+        "approved": 0,
+        "published": 0,
+        "failed": 0
+      },
+      "rates": {
+        "qcApprovalRate": null,
+        "publishSuccessRate": null
+      },
+      "targets": {
+        "opportunitiesMin": 8,
+        "draftedMin": 5,
+        "qcApprovalRateMin": 0.7,
+        "publishSuccessRateMin": 0.9
+      },
+      "status": {
+        "opportunities": "below_target",
+        "drafted": "below_target",
+        "qcApprovalRate": "unknown",
+        "publishSuccessRate": "unknown"
+      }
+    }
+  }
+}

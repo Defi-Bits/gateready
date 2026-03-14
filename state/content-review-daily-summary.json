@@ -1,0 +1,31 @@
+{
+  "ts": "2026-03-14T12:35:00.124Z",
+  "ventures": [
+    {
+      "venture": "edgeterminal",
+      "ok": false,
+      "error": "Command failed: node scripts/content-review-intel.mjs --platform x --venture edgeterminal --limit 20\nzsh:1: command not found: node\n"
+    },
+    {
+      "venture": "gateready",
+      "ok": false,
+      "error": "Command failed: node scripts/content-review-intel.mjs --platform x --venture gateready --limit 20\nzsh:1: command not found: node\n"
+    },
+    {
+      "venture": "african-storytime",
+      "ok": false,
+      "error": "Command failed: node scripts/content-review-intel.mjs --platform x --venture african-storytime --limit 20\nzsh:1: command not found: node\n"
+    },
+    {
+      "venture": "wholesale",
+      "ok": false,
+      "error": "Command failed: node scripts/content-review-intel.mjs --platform x --venture wholesale --limit 20\nzsh:1: command not found: node\n"
+    },
+    {
+      "venture": "summit",
+      "ok": false,
+      "error": "Command failed: node scripts/content-review-intel.mjs --platform x --venture summit --limit 20\nzsh:1: command not found: node\n"
+    }
+  ],
+  "ok": false
+}
