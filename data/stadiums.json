@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "version": "1.0",
+    "last_updated": "2025-01-01",
+    "total_venues": 52,
+    "note": "Verified policies for major US stadiums and arenas"
+  },
+  "venues": [
+    {
+      "id": "atlanta-mercedes-benz",
+      "name": "Mercedes-Benz Stadium",
+      "city": "Atlanta",
+      "state": "GA",
+      "teams": ["Atlanta Falcons", "Atlanta United FC"],
+      "policy": "Clear bag policy strictly enforced. Allowed: one clear plastic, vinyl, or PVC bag (no larger than 12\u2033×6\u2033×12\u2033); one small clutch or purse (no larger than 4.5\u2033×6.5\u2033)",
+      "gateready_passes": true,
+      "confidence": 0.99,
+      "fifa_2026": semifinal",
+      "source": "Mercedes-Benz Stadium official",
+      "aliases": ["MBS", "Falcons stadium", "ATL United stadium", "atlanta stadium"]
+    },
+    {
+      "id": "atlanta-state-farm",
+      "name": "State Farm Arena",
+      "city": "Atlanta",
+      "state": "GA",
+      "teams": ["Atlanta Hawks"],
+      "policy": "Clear bag policy enforced. One clear bag up to 12\u2033×6\u2033×12\u2033; one small clutch no larger than 4.5\u2033×6.5\u2033. No backpacks.",
+      "gateready_passes": true,
+      "confidence": 0.99,
+      "source": "State Farm Arena official",
+      "aliases": ["Philips Arena", "Hawks arena", "atlanta arena"]
+    },
+    {
+      "id": "cumberland-truist",
+      "name": "Truist Park",
+      "city": "Cumberland",
+      "state": "GA",
+      "teams": ["Atlanta Braves"],
+      "policy": "Clear bag policy enforced. Clear plastic bag no larger than 16\u2033×16\u2033×8\u2033. One-gallon clear ziplock also permitted. Small clutch up to 4\u2033×7\u2033 also permitted.",
+      "gateready_passes": true,
+      "confidence": 0.98,
+      "source": "Truist Park official",
+      "aliases": ["SunTrust Park", "Braves stadium", "cobb county stadium"]
+    },
+    {
+      "id": "newjersey-metlife",
+      "name": "MetLife Stadium",
+      "city": "East Rutherford",
+      "state": "NJ",
+      "teams": ["NY Giants", "NY Jets"],
+      "policy": "NFL team clear bag policy enforced. Clear bag 12\u2033×6\u2033×12\u2033 max; one-gallon ziplock; small clutch 4.5\u2033×6.5\u2033. FIFA 2026 Final venue.",
+      "gateready_passes": true,
+      "confidence": 0.99,
+      "fifa_2026": "final",
+      "source": "MetLife Stadium official",
+      "aliases": ["Giants stadium", "Jets stadium", "metlife", "new york giants"]
+    },
+    {
+      "id": "inglewood-sofi",
+      "name": "SoFi Stadium",
+      "city": "Inglewood",
+      "state": "CA",
+      "teams": ["LA Rams", "LA Chargers"],
+      "policy": "NFL clear bag policy. 12\u2033×6\u2033×12\u2033 max. Strictly enforced. No backpacks or non-clear bags of any size.",
+      "gateready_passes": true,
+      "confidence": 0.99,
+      "source": "SoFi Stadium official",
+      "aliases": ["SoFi", "sofi", "la rams stadium", "chargers stadium"]
+    }
+  ]
+}
