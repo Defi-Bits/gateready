@@ -1,0 +1,22 @@
+<!-- VENDOR LOGIN PAGE -->
+<section style="background:var(--black);padding:80px 40px;min-height:80vh;display:flex;align-items:center;justify-content:center;">
+  <div style="width:100%;max-width:480px;">
+    <p class="eyebrow" style="margin-bottom:12px;">Vendor Portal</p>
+    <h1 class="display-md" style="color:var(--off-white);margin-bottom:8px;">Vendor Login</h1>
+    <p style="color:#666;margin-bottom:32px;">Access your vendor dashboard, order history, and account settings.</p>
+    <div id="loginError" style="display:none;background:rgba(196,18,48,0.1);border:1px solid rgba(196,18,48,0.2);border-radius:4px;padding:10px 14px;font-size:13px;color:var(--red);margin-bottom:16px;"></div>
+    <div style="margin-bottom:16px;">
+      <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#444;display:block;margin-bottom:8px;">Email</label>
+      <input type="email" id="vendorEmail" placeholder="yowu@business.com" style="width:100%;box-sizing:border-box;padding:12px 14px;background:#111117;border:1px solid #2a2a2e;border-radius:4px;font-size:14px;color:var(--off-white);outline:none;" />
+    </div>
+    <div style="margin-bottom:24px;">
+      <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#444;display:block;margin-bottom:8px;">Password</label>
+      <input type="password" id="vendorPassword" placeholder="•Ҁ�•" style="width:100%;box-sizing:border-box;padding:12px 14px;background:#111117;border:1px solid #2a2a2e;border-radius:4px;font-size:14px;color:var(--off-white);outline:none;" />
+    </div>
+    <button id="vendorLoginBtn" class="btn btn-primary" style="width:100%;padding:14px;justify-content:center;">Sign In &raquo;\u0020</button>
+    <p style="margin-top:24px;text-align:center;font-size:13px;color:#444;">Not a vendor yet? <a href="/wholesale" style="color:var(--red);text-decoration:none;font-weight:600;">Apply for access &raquo;</a></p>
+  </div>
+</section>
+<script>
+document.getElementById('vendorLoginBtn').addEventListener('click',async()=>{try{const res=await fetch('/api/vendor/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:document.getElementById('vendorEmail').value,password:document.getElementById('vendorPassword').value})});if(res.ok){window.location.reload();}else{const d=await res.json();document.getElementById('loginError').style.display='block';document.getElementById('loginError').textContent=d.error||'Login failed.';}}catch(e){console.error(e);}});
+</script>
