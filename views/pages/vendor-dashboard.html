@@ -1,0 +1,65 @@
+<!-- VENDOR DASHBOARD — authenticated view -->
+<section style="background:var(--black);padding:48px 0 32px;border-bottom:1px solid #1e1e21;">
+  <div style="max-width:1100px;margin:0 auto;padding:0 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <div style="width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px #22c55e;"></div>
+        <span style="font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#22c55e;">Active Vendor Account</span>
+      </div>
+      <h1 style="font-family:var(--font-display);font-weight:900;font-size:36px;text-transform:uppercase;color:var(--off-white);line-height:1;">Welcome back, {{VENDOR_NAME}}.</h1>
+      <div style="font-size:13px;color:#555;margin-top:4px;">{{VENDOR_BUSINESS}} · logged in</div>
+    </div>
+    <div style="display:flex;gap:12px;">
+      <a href="/wholesale" class="btn btn-primary">View Pricing</a>
+      <a href="/api/vendor/logout" class="btn btn-outline-white" style="font-size:13px;">Log Out</a>
+    </div>
+  </div>
+</section>
+<section style="background:#0a0a0e;padding:48px 0;min-height:60vh;">
+  <div style="max-width:1100px;margin:0 auto;padding:0 40px;">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px;">
+      <div style="background:#111117;border:1px solid #1e1e28;border-radius:6px;padding:24px;"><div style="font-size:11px;color:#444;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-display);margin-bottom:8px;">Your Tier</div><div style="font-family:var(--font-display);font-weight:900;font-size:32px;color:var(--off-white);">{{VENDOR_TIERA}} bags</div><div style="font-size:11px;color:#444;margin-top:4px;">Current order tier</div></div>
+      <div style="background:#111117;border:1px solid #1e1e28;border-radius:6px;padding:24px;"><div style="font-size:11px;color:#444;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-display);margin-bottom:8px;">Next Event</div><div style="font-family:var(--font-display);font-weight:900;font-size:28px;color:var(--red);">3 Days</div><div style="font-size:11px;color:#444;margin-top:4px;">Falcons home game</div></div>
+      <div style="background:#111117;border:1px solid #1e1e28;border-radius:6px;padding:24px;"><div style="font-size:11px;color:#444;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-display);margin-bottom:8px;">Orders</div><div style="font-family:var(--font-display);font-weight:900;font-size:32px;color:var(--off-white);">{{ORDERS_COUNT}}</div><div style="font-size:11px;color:#444;margin-top:4px;">Total orders placed</div></div>
+      <div style="background:#111117;border:1px solid #1e1e28;border-radius:6px;padding:24px;"><div style="font-size:11px;color:#444;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-display);margin-bottom:8px;">Status</div><div style="font-family:var(--font-display);font-weight:900;font-size:24px;color:#22c55e;">Active</div><div style="font-size:11px;color:#444;margin-top:4px;">Account in good standing</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;">
+      <div style="background:#111117;border:1px solid #1e1e28;border-radius:6px;overflow:hidden;">
+        <div style="padding:20px 24px;border-bottom:1px solid #1e1e28;display:flex;justify-content:space-between;align-items:center;">
+          <div style="font-family:var(--font-display);font-weight:800;font-size:14px;text-transform:uppercase;color:var(--off-white);letter-spacing:0.1em;">Quick Reorder</div>
+          <div style="font-size:11px;color:#555;">Ships in 2 business days</div>
+        </div>
+        <div style="padding:24px;">
+          <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px;" id="qtyGrid">
+            <button class="qty-btn" data-qty="10" data-price="16">10<br><span>$16/bag</span></button>
+            <button class="qty-btn active" data-qty="50" data-price="13">50<br><span>$13/bag</span></button>
+            <button class="qty-btn" data-qty="100" data-price="11">100<br><span>$11/bag</span></button>
+            <button class="qty-btn" data-qty="250" data-price="10">250<br><span>$10/bag</span></button>
+            <button class="qty-btn" data-qty="500" data-price="9">500+<br><span>$9/bag</span></button>
+          </div>
+          <div id="orderSummary" style="background:#0a0a0e;border:1px solid #2a2a2e;border-radius:4px;padding:16px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;"><div><div style="font-size:13px;color:#555;">50 bags · $13/bag</div><div style="font-family:var(--font-display);font-weight:900;font-size:24px;color:var(--off-white);">$650 total</div></div><div style="text-align:right;"><div style="font-size:11px;color:#22c55e;">$600 profit at $25 retail</div><div style="font-size:11px;color:#444;margin-top:2px;">estimated</div></div></div>
+          <button id="placeOrderBtn" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">Place Order — $650</button>
+        </div>
+      </div>
+      <div style="background:#111117;border:1px solid #1e1e28;border-radius:6px;padding:20px;">
+        <div style="font-family:var(--font-display);font-weight:800;font-size:13px;text-transform:uppercase;color:var(--off-white);letter-spacing:0.1em;margin-bottom:16px;">Quick Links</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="/wholesale" style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#0a0a0e;border:1px solid #1e1e28;border-radius:4px;text-decoration:none;"><span style="font-size:13px;color:#aaa;">ViewPricing</span><span style="color:var(--red);">→</span></a>
+          <a href="/game-day-guide" style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#0a0a0e;border:1px solid #1e1e28;border-radius:4px;text-decoration:none;"><span style="font-size:13px;color:#aaa;">Game Day Guide</span><span style="color:var(--red);">→</span></a>
+          <a href="mailto:vendors@begateready.com" style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:#0a0a0e;border:1px solid #1e1e28;border-radius:4px;text-decoration:none;"><span style="font-size:13px;color:#aaa;">Contact Support</span><span style="color:var(--red);">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+const qtyBtns = document.querySelectorAll('.qty-btn');
+let selectedQty=50,selectedPrice=13;
+function updateSummary(){
+  const total=selectedQty*selectedPrice;
+  const profit=selectedQty*(25-selectedPrice);
+  document.getElementById('orderSummary').innerHTML=`<div><div style="font-size:13px;color:#555;">${selectedQty} bags × $${selectedPrice}/bag</div><div style="font-family:var(--font-display);font-weight:900;font-size:24px;color:var(--off-white);">$${total.toLocaleString()} total</div></div><div style="text-align:right;"><div style="font-size:11px;color:#22c55e;">$${profit.toLocaleString()} profit at $25 retail</div><div style="font-size:11px;color:#444;margin-top:2px;">estimated</div></div>`;
+  document.getElementById('placeOrderBtn').textContent=selectedQty>=500?'Contact Us for 500+ Order':`Place Order — $${total.toLocaleString()}`;
+}
+qtyBtns.forEach(b=>{b.addEventListener('click',()=>{});});
+</script>
