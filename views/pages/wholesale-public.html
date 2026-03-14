@@ -1,42 +1,44 @@
 <!-- WHOLESALE HERO -->
 <section class="wholesale-hero">
   <div class="wholesale-inner">
-    <p class="eyebrow">For Retailers &amp; Vendors</p>
-    <h1 class="display-lg">Sell GateReady.</h1>
-    <p style="font-size:16px;color:#666;margin-bottom:32px;line-height:1.7;">The highest-demand impulse product at stadiums, arenas, and concert venues. Apply for a vendor account to see wholesale pricing and place orders.</p>
+    <p class="eyebrow">For Retailers & Vendors</p>
+    <h1 class="display-lg wholesale-hero-headline">Sell GateReady.</h1>
+    <p class="wholesale-hero-sub">The highest-demand impulse product at stadiums, arenas, and concert venues. Apply for a vendor account to see wholesale pricing.</p>
     <div style="display:flex;gap:16px;flex-wrap:wrap;">
       <a href="#apply" class="btn btn-primary btn-lg">Apply for Wholesale Access</a>
       <a href="/vendor-portal" class="btn btn-outline-white btn-lg">Vendor Login →</a>
     </div>
   </div>
 </section>
-<section style="background:var(--red);padding:60px 0;">
-  <div style="max-width:1000px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
-    <div style="background:rgba(0,0,0,0.15);padding:36px 24px;text-align:center;">
-      <div style="font-family:var(--font-display);font-weight:900;font-size:52px;color:#fff;line-height:1;">$9</div>
-      <div style="font-size:12px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-top:8px;">Your cost per bag<br>(250+ order)</div>
+<section class="wholesale-benefits">
+  <div class="ws-benefits-inner">
+    <div class="section-header reveal">
+      <p class="eyebrow" style="margin-bottom:12px;">Why Vendors Choose GateReady</p>
+      <h2 class="section-title">Built for Impulse.<br>Designed for Volume.</h2>
     </div>
-    <div style="background:rgba(0,0,0,0.15);padding:36px 24px;text-align:center;">
-      <div style="font-family:var(--font-display);font-weight:900;font-size:52px;color:#fff;line-height:1;">$25</div>
-      <div style="font-size:12px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.1em;margin-top:8px;">Retail price<br>per bag</div>
-    </div>
-    <div style="background:rgba(0,0,0,0.25);padding:36px 24px;text-align:center;border:2px solid rgba(255,255,255,0.2);">
-      <div style="font-family:var(--font-display);font-weight:900;font-size:52px;color:#fff;line-height:1;">$600</div>
-      <div style="font-size:12px;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.1em;margin-top:8px;">Gross profit from<br>one event weekend</div>
+    <div class="benefits-grid">
+      <div class="benefit-card reveal"><div class="benefit-icon">🏟️</div><div class="benefit-title">Guaranteed Demand</div><div class="benefit-desc">Every event brings fans who forgot their clear bag. No negotiation required.</div></div>
+      <div class="benefit-card reveal"><div class="benefit-icon">💰</div><div class="benefit-title">Strong Margins</div><div class="benefit-desc">Approved vendors get tiered wholesale pricing. Full details after approval.</div></div>
+      <div class="benefit-card reveal"><div class="benefit-icon">📅</div><div class="benefit-title">Year-Round Events</div><div class="benefit-desc">NFL, NBA, MLB, NHL, MLS, concerts, festivals — clear bag demand doesn't have an off-season.</div></div>
+      <div class="benefit-card reveal"><div class="benefit-icon">⚡</div><div class="benefit-title">Fast Reorder Portal</div><div class="benefit-desc">One-click reorders, live inventory tracking, event-based restocking alerts.</div></div>
+      <div class="benefit-card reveal"><div class="benefit-icon">📦</div><div class="benefit-title">Low Minimum Order</div><div class="benefit-desc">Start small, prove the concept, and scale up as demand builds.</div></div>
+      <div class="benefit-card reveal"><div class="benefit-icon">🤝</div><div class="benefit-title">Vendor Support</div><div class="benefit-desc">Direct line to our team. Display materials included with your first order.</div></div>
     </div>
   </div>
 </section>
 <section class="wholesale-form-section" id="apply">
   <div class="ws-form-inner">
-    <h2 class="section-title">Apply for Wholesale Access</h2>
-    <div class="reveal">
-      <div class="form-row">
-        <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" id="ff_first" placeholder="Marcus" /></div>
-        <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" id="ff_last" placeholder="Jhonson" /></div>
-      </div>
-      <div class="form-group"><label class="form-label">Business Name</label><input type="text" class="form-input" id="ff_biz" placeholder="Stadium Snacks LLC" /></div>
-      <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="ff_email" placeholder="you@business.com" /></div>
-      <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Submit Application</button>
+    <div class="section-header reveal"><p class="eyebrow" style="margin-bottom:12px;">Get Approved</p><h2 class="section-title">Apply for<br>Wholesale Access</h2></div>
+    <div class="reveal" id="applyForm">
+      <div class="form-row"><div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" id="f_first" placeholder="Marcus"/></div><div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" id="f_last" placeholder="Johnson"/></div></div>
+      <div class="form-group"><label class="form-label">Business Name</label><input type="text" class="form-input" id="f_biz" placeholder="Stadium Snacks LLC"/></div>
+      <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="f_email" placeholder="you@business.com"/></div>
+      <div class="form-group"><label class="form-label">Phone</label><input type="tel" class="form-input" id="f_phone" placeholder="(404) 000-0000"/></div>
+      <div class="form-group"><label class="form-label">Business Type</label><select class="form-select" id="f_type"><option value="">Select type</option><option>Gas Station/Convenience Store</option><option>Stadium or Arena Vendor</option><option>Sports Bar</option><option>Tailgate/Event Vendor</option><option>Other Retail</option></select></div>
+      <div class="form-group"><label class="form-label">Nearest Stadium</label><input type="text" class="form-input" id="f_venue" placeholder="e.g. Mercedes-Benz Stadium"/></div>
+      <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;" id="applySubmitBtn">Submit Application</button>
     </div>
+    <div id="applySuccess" style="display:none;text-align:center;padding:60px 0;"><h3>Application Received!</h3><p>We'll follow up within 1 business day.</p></div>
   </div>
 </section>
+<script>document.getElementById('applySubmitBtn')?.addEventListener('click',async(e)=>{e.preventDefault();const btn=e.target;btn.textContent='Submitting...';btn.disabled=true;try{await fetch('/api/vendor/apply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({first:document.getElementById('f_first').value,last:document.getElementById('f_last').value,business:document.getElementById('f_biz').value,email:document.getElementById('f_email').value,phone:document.getElementById('f_phone').value,type:document.getElementById('f_type').value,venue:document.getElementById('f_venue').value})});}catch(e){}document.getElementById('applyForm').style.display='none';document.getElementById('applySuccess').style.display='block';});</script>
