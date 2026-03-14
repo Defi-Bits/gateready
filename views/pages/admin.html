@@ -1,0 +1,100 @@
+<!-- ADMIN DASHBOARD -->
+<style>
+.admin-wrap{min-height:100vh;background:#05050d;padding:0 0 80px;}
+.admin-topbar{background:#0a0a12;border-bottom:2px solid #C41230;padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.admin-brand{font-family:var(--font-display);font-weight:900;font-size:14px;text-transform:uppercase;letter-spacing:.15em;color:#C41230;}
+.admin-badge{background:rgba(196,18,48,.15);border:1px solid rgba(196,18,48,.3);color:#C41230;font-family:var(--font-display);font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:3px 10px;border-radius:40px;}
+.admin-user{font-size:12px;color:#444;display:flex;align-items:center;gap:12px;}
+.admin-nav{display:flex;gap:0;border-bottom:1px solid #1a1a1e;background:#08080f;padding:0 40px;overflow-x:auto;}
+.atab{padding:16px 20px;font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#3a3a3a;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none;}
+.atab:hover{color:#888;}
+.atab.active{color:#f2ede6;border-bottom-color:#C41230;}
+.admin-body{padding:40px;max-width:1400px;margin:0 auto;}
+.admin-section{display:none;}.admin-section.active{display:block;}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:36px;}
+.kpi{background:#0d0d18;border:1px solid #1a1a2e;border-radius:6px;padding:24px;}
+.kpi-val{font-family:var(--font-display);font-weight:900;font-size:36px;color:#f2ede6;line-height:1;}
+.kpi-label{font-size:11px;color:#444;text-transform:uppercase;letter-spacing:.1em;margin-top:6px;}
+.atbl{width:100%;border-collapse:collapse;}
+.atbl th{font-family:var(--font-display);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#333;padding:10px 16px;text-align:left;border-bottom:1px solid #111;}
+.atbl td{padding:12px 16px;font-size:13px;color:#aaa;border-bottom:1px solid #0e0e14;vertical-align:middle;}
+.abtn{font-family:var(--font-display);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:5px 12px;border-radius:3px;cursor:pointer;border:none;}
+.abtn-approve{background:rgba(34,197,94,.15);color:#22c55e;border:1px solid rgba(34,197,94,.3);}
+.abtn-reject{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.2);}
+.abtn-edit{background:rgba(255,255,255,.05);color:#888;border:1px solid #1a1a1e;}
+.abtn-gen{background:rgba(196,18,48,.15);color:#C41230;border:1px solid rgba(196,18,48,.3);}
+.admin-card{background:#0d0d18;border:1px solid #1a1a2e;border-radius:6px;margin-bottom:20px;}
+.admin-card-hd{padding:16px 20px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;justify-content:space-between;}
+.admin-card-title{font-family:var(--font-display);font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:#888;}
+.status-pill{display:inline-block;font-family:var(--font-display);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 10px;border-radius:40px;}
+.sp-pending{background:rgba(245,158,11,.1);color:#f59e0b;border:1px solid rgba(245,158,11,.2);}
+.sp-approved{background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.2);}
+.sp-rejected{background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.2);}
+.sp-active{background:rgba(34,197,94,.1);color:#22c55e;border:1px solid rgba(34,197,94,.2);}
+.sp-cached{background:rgba(96,165,250,.1);color:#60a5fa;border:1px solid rgba(96,165,250,.2);}
+.sp-llm{background:rgba(168,85,247,.1);color:#a855f7;border:1px solid rgba(168,85,247,.2);}
+.admin-input{background:#08080f;border:1px solid #1e1e28;color:#f2ede6;padding:8px 12px;font-size:13px;border-radius:3px;width:100%;}
+.admin-select{background:#08080f;border:1px solid #1e1e28;color:#f2ede6;padding:8px 12px;font-size:13px;border-radius:3px;width:100%;}
+.admin-form-row{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:12px;align-items:end;padding:16px 20px;}
+.admin-label{font-size:11px;color:#444;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;}
+.chart-bar-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+.chart-bar-label{font-size:11px;color:#555;width:80px;text-align:right;}
+.chart-bar-track{flex:1;background:#111;border-radius:2px;height:16px;overflow:hidden;}
+.chart-bar-fill{height:100%;border-radius:2px;}
+.chart-bar-val{font-family:var(--font-display);font-weight:700;font-size:11px;color:#888;width:50px;}
+.apikey-code{font-family:monospace;font-size:12px;background:#050508;padding:4px 10px;border-radius:3px;color:#60a5fa;}
+.gc-cost-note{padding:12px 20px;background:rgba(168,85,247,.05);border-top:1px solid rgba(168,85,247,.1);font-size:12px;color:#666;}
+</style>
+<div class="admin-wrap">
+  <div class="admin-topbar">
+    <div style="display:flex;align-items:center;gap:16px;"><div class="admin-brand">GateReady™ Admin</div><div class="admin-badge">Internal Only</div></div>
+    <div class="admin-user"><span style="color:#333;">admin@begateready.com</span><button class="abtn abtn-edit" onclick="spNav('home')">← Back to Site</button></div>
+  </div>
+  <div class="admin-nav">
+    <button class="atab active" onclick="adminTab('overview',this)">Overview</button>
+    <button class="atab" onclick="adminTab('applications',this)">Applications <span id="pendingBadge" style="background:#f59e0b;color:#000;font-size:9px;border-radius:40px;padding:1px 6px;margin-left:4px;">3</span></button>
+    <button class="atab" onclick="adminTab('vendors',this)">Active Vendors</button>
+    <button class="atab" onclick="adminTab('gatecheck',this)">Gate Check DB</button>
+    <button class="atab" onclick="adminTab('apkeys',this)">API Keys</button>
+    <button class="atab" onclick="adminTab('revenue',this)">Revenue</button>
+  </div>
+  <div class="admin-body">
+    <div class="admin-section active" id="sec-overview">
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-val">12</div><div class="kpi-label">Active Vendors</div></div>
+        <div class="kpi"><div class="kpi-val">3</div><div class="kpi-label">Pending Applications</div></div>
+        <div class="kpi"><div class="kpi-val">847</div><div class="kpi-label">Gate Checks (30d)</div></div>
+        <div class="kpi"><div class="kpi-val">$2,940</div><div class="kpi-label">SaaS MRR</div></div>
+      </div>
+      <div class="admin-card"><div class="admin-card-hd"><div class="admin-card-title">Gate Check Volume</div></div><div style="padding:20px;"><div id="gcshart"></div></div></div>
+    </div>
+    <div class="admin-section" id="sec-applications">
+      <div class="admin-card"><div class="admin-card-hd"><div class="admin-card-title">Vendor Applications</div></div>
+        <table class="atbl"><thead><tr><th>Business</th><th>Contact</th><th>Status</th><th">Actions</th></tr></thead><tbody><tr ><td>Sample Applicant</td><td>applicant@example.com</td><td><span class="status-pill sp-pending">Pending</span></td><td><button class="abtn abtn-approve">Approve</button></td></tr></tbody></table>
+      </div>
+    </div>
+    <div class="admin-section" id="sec-vendors">
+      <div class="admin-card"><div class="admin-card-hd"><div class="admin-card-title">Active Vendor Accounts</div></div>
+        <table class="atbl"><thead><tr><th>Business</th><th>Status</th></tr></thead><tbody><tr><td>Stadium Snacks LLC</td><td><span class="status-pill sp-active">Active</span></td></tr></tbody></table>
+      </div>
+    </div>
+    <div class="admin-section" id="sec-gatecheck">
+      <div class="admin-card"><div class="admin-card-hd"><div class="admin-card-title">Gate Check DB</div></div><div style="padding:20px;color:#444;">Database management ui here.</div></div>
+    </div>
+    <div class="admin-section" id="sec-apikeys">
+      <div class="admin-card"><div class="admin-card-hd"><div class="admin-card-title">Embed API Keys</div><button class="abtn abtn-gen">+ Generate Key</button></div><div style="padding:20px;color:#444;">Key management ui here.</div></div>
+    </div>
+    <div class="admin-section" id="sec-revenue">
+      <div class="admin-card"><div class="admin-card-hd"><div class="admin-card-title">Revenue Summary</div></div><div style="padding:20px;color:#444;">Revenue charts here.</div></div>
+    </div>
+  </div></div>
+
+<script>
+function adminTab(id, btn) {
+  document.querySelectorAll('.atab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('sec-' + id).classList.add('active');
+}
+setTimeout(()=>{const el = document.getElementById('gcshart');if(el){const d=[98,112,87,143,156,128,123];const m=Math.max(...d);el.innerHTML=d.map((v,i) => `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><div style="width:60px;font-size:11px;color:#555;text-align:right;">Mar ${i+5}</div><div style="flex:1;background:#111;border-radius:2px;height:14px;overflow:hidden;"><div style="height:100%;width:${(v/m*100).toFixed(0)}%;background:${i===6?'#C41230':'#2a1a1e'};"></div></div><div style="width:40px;font-size:11px;color:#888;">${v}</div></div>`).join('');}},200);
+</script>
