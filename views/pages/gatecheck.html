@@ -1,0 +1,1481 @@
+<!-- GATE CHECK HERO -->
+<section class="gc-hero">
+  <div class="gc-hero-inner">
+
+    <!-- LANGUAGE TOGGLE -->
+    <div class="gc-lang-bar">
+      <span class="gc-lang-label">🌍</span>
+      <button class="gc-lang-btn active" data-lang="en">EN</button>
+      <button class="gc-lang-btn" data-lang="es">ES</button>
+      <button class="gc-lang-btn" data-lang="pt">PT</button>
+      <button class="gc-lang-btn" data-lang="fr">FR</button>
+      <button class="gc-lang-btn" data-lang="de">DE</button>
+      <button class="gc-lang-btn" data-lang="ar">AR</button>
+    </div>
+
+    <h1 class="gc-hero-title" id="gcHeroTitle">
+      Is My Bag<br><span class="accent">Allowed?</span>
+    </h1>
+    <p class="gc-hero-sub" id="gcHeroSub">Type any stadium, arena, or team. Get the exact bag policy — before you leave the house.</p>
+
+    <!-- FIFA WORLD CUP MODE BANNER -->
+    <div class="gc-fifa-banner" id="gcFifaBanner" style="display:none;">
+      <span class="gc-fifa-ball">⚽</span>
+      <span id="gcFifaBannerText">FIFA World Cup 2026™ venue detected. FIFA enforces clear bag policy at all 11 US host stadiums.</span>
+      <a href="/world-cup" class="gc-fifa-link" id="gcFifaLink">Full World Cup Guide →</a>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="gc-search-wrap">
+      <input
+        type="text" id="gcInput" class="gc-input"
+        placeholder="Stadium name, team, or city..."
+        autocomplete="off" spellcheck="false"
+      />
+      <button id="gcBtn" class="gc-search-btn" aria-label="Check policy">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+    <div class="gc-kbd-hint"><kbd>/</kbd> to focus · <kbd>Enter</kbd> to search · <kbd>Esc</kbd> to clear</div>
+    <div id="gcError" class="gc-error" style="display:none;"></div>
+
+    <!-- HISTORY CHIPS — shown when sessionStorage has entries -->
+    <div class="gc-history-row" id="gcHistoryRow" style="display:none;">
+      <span class="gc-history-label">Recent:</span>
+    </div>
+
+    <!-- QUICK PICKS — Sport + FIFA tabs -->
+    <div class="gc-qp-tabs">
+      <button class="gc-qp-tab active" data-tab="sport">🏈 Sport</button>
+      <button class="gc-qp-tab" data-tab="fifa">⚽ FIFA 2026</button>
+    </div>
+    <div class="gc-quick-picks" id="gcQpSport">
+      <button class="qp" data-q="Mercedes-Benz Stadium">🏈 Falcons / ATL United</button>
+      <button class="qp" data-q="SoFi Stadium">🏟️ SoFi</button>
+      <button class="qp" data-q="Arrowhead Stadium">🏈 Chiefs</button>
+      <button class="qp" data-q="Lambeau Field">🧀 Packers</button>
+      <button class="qp" data-q="Madison Square Garden">🏀 MSG</button>
+      <button class="qp" data-q="AT&T Stadium">⭐ Cowboys</button>
+      <button class="qp" data-q="Yankee Stadium">⚾ Yankees</button>
+      <button class="qp" data-q="Allegiant Stadium">🎲 Raiders</button>
+    </div>
+    <div class="gc-quick-picks" id="gcQpFifa" style="display:none;">
+      <button class="qp" data-q="Mercedes-Benz Stadium">⚽ Atlanta</button>
+      <button class="qp" data-q="AT&T Stadium">⚽ Dallas</button>
+      <button class="qp" data-q="MetLife Stadium">⚽ NY/NJ Final</button>
+      <button class="qp" data-q="SoFi Stadium">⚽ Los Angeles</button>
+      <button class="qp" data-q="Hard Rock Stadium">⚽ Miami</button>
+      <button class="qp" data-q="Arrowhead Stadium">⚽ Kansas City</button>
+      <button class="qp" data-q="NRG Stadium">⚽ Houston</button>
+      <button class="qp" data-q="Lumen Field">⚽ Seattle</button>
+    </div>
+  </div>
+</section>
+
+<!-- LOADING -->
+<div id="gcLoading" style="display:none;" class="gc-loading">
+  <div class="gc-spinner"></div>
+  <div id="gcLoadingText" class="gc-loading-text">Looking up policy...</div>
+  <div class="gc-loading-bar"><div class="gc-loading-bar-fill" id="gcLoadingBar"></div></div>
+</div>
+
+<!-- EMAIL GATE (shown on DB miss, before LLM fires) -->
+<div id="gcEmailGate" style="display:none;" class="gc-email-gate-section">
+  <div class="gc-email-gate-inner">
+    <div class="gc-eg-icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:#555;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </div>
+    <h2 class="gc-eg-title">We'll Look That Up</h2>
+    <p class="gc-eg-body">
+      <span id="gcEgQuery"></span> isn't in our database yet.<br>
+      Enter your email and we'll find the policy using AI — and send you the answer.
+    </p>
+    <div class="gc-eg-form">
+      <input type="email" id="gcEmailInput" class="gc-eg-input" placeholder="your@email.com" />
+      <button id="gcEmailSubmit" class="gc-eg-btn">Look It Up →</button>
+    </div>
+    <p class="gc-eg-fine">No spam. One email with your answer. We use this to improve the database for everyone.
+      <br><button id="gcEgSkip" class="gc-eg-skip">Skip — just show general guidance</button>
+    </p>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="gcResult" style="display:none;" class="gc-result-section">
+  <div class="gc-result-inner">
+
+    <!-- VERDICT BANNER -->
+    <div id="gcVerdict" class="gc-verdict">
+      <div id="gcVerdictIcon" class="gc-verdict-icon"></div>
+      <div class="gc-verdict-text">
+        <div id="gcVerdictTitle" class="gc-verdict-title"></div>
+        <div id="gcVerdictMsg" class="gc-verdict-msg"></div>
+      </div>
+      <a href="/shop" id="gcVerdictCTA" class="btn btn-primary gc-verdict-cta" style="display:none;">Get GateReady — $25</a>
+    </div>
+
+    <!-- VENUE HEADER -->
+    <div class="gc-venue-header">
+      <div>
+        <div id="gcVenueName" class="gc-venue-name"></div>
+        <div id="gcVenueInfo" class="gc-venue-info"></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+        <div id="gcFifaModeBadge" class="gc-fifa-mode-badge" style="display:none;">⚽ FIFA World Cup 2026™ Venue</div>
+        <div id="gcSourceTag" class="gc-source-tag"></div>
+      </div>
+    </div>
+
+    <!-- POLICY GRID: what you CAN bring -->
+    <div class="gc-policy-split">
+
+      <!-- LEFT: allowed -->
+      <div class="gc-allowed-col">
+        <div class="gc-col-label gc-col-label-green">✓ What You Can Bring</div>
+        <ul id="gcAllowedList" class="gc-allowed-list"></ul>
+      </div>
+
+      <!-- RIGHT: not allowed -->
+      <div class="gc-blocked-col">
+        <div class="gc-col-label gc-col-label-red">✗ What's Not Allowed</div>
+        <ul class="gc-blocked-list" id="gcBlockedList"></ul>
+      </div>
+
+    </div>
+
+    <!-- POLICY SPECS ROW -->
+    <div id="gcSpecsRow" class="gc-specs-row"></div>
+
+    <!-- NOTES -->
+    <div id="gcNotes" class="gc-notes" style="display:none;"></div>
+
+    <!-- BOTTOM CTA ROW -->
+    <div class="gc-bottom-row">
+      <div class="gc-bottom-copy">
+        <div class="gc-bottom-headline">GateReady bags meet every major stadium's clear bag policy.</div>
+        <div class="gc-bottom-sub">One bag. Every venue. $25.</div>
+      </div>
+      <a href="/shop" class="btn btn-primary">Buy Now — $25</a>
+    </div>
+
+    <!-- COPY POLICY -->
+    <div style="text-align:center;margin-top:0;">
+      <button id="gcCopyBtn" class="gc-copy-btn" style="margin:0 auto;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy Policy Summary
+      </button>
+    </div>
+
+    <!-- SEARCH AGAIN -->
+    <div style="text-align:center;margin-top:16px;">
+      <button id="gcAgainBtn" class="btn btn-outline">Check Another Venue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS — shown when idle -->
+<section id="gcHow" class="gc-how">
+  <div class="gc-how-inner">
+    <div class="gc-how-header">
+      <p class="eyebrow" style="margin-bottom:10px;">How Gate Check Works</p>
+      <h2 class="display-md" style="color:var(--off-white);">Instant. Free.<br>Draws on Real Policy Data.</h2>
+    </div>
+    <div class="gc-how-grid">
+      <div class="gc-how-card">
+        <div class="gc-how-num">01</div>
+        <div class="gc-how-title">You type anything</div>
+        <p class="gc-how-desc">Stadium name, team nickname, city, slang — "Jerry World", "the Garden", "can I bring a purse to the Hawks game". Gate Check understands natural language.</p>
+      </div>
+      <div class="gc-how-card">
+        <div class="gc-how-num">02</div>
+        <div class="gc-how-title">We match instantly</div>
+        <p class="gc-how-desc">A verified database of 170+ venues answers in milliseconds. For venues not in the database, our AI looks up the policy and caches it — so the next fan asking the same question gets a free instant answer.</p>
+      </div>
+      <div class="gc-how-card">
+        <div class="gc-how-num">03</div>
+        <div class="gc-how-title">You know before you go</div>
+        <p class="gc-how-desc">Exact bag size limits, what you can bring, what to leave behind. Clear answer. No navigating 5 pages of venue FAQ. Just the answer.</p>
+      </div>
+    </div>
+    <div class="gc-how-note">
+      🏟️ Coverage: NFL · NBA · MLB · NHL · MLS · College Football · Major Concert Venues
+      &nbsp;·&nbsp; Policy out of date? <a href="mailto:policy@begateready.com" style="color:var(--red);">Let us know →</a>
+    </div>
+  </div>
+</section>
+
+<style>
+/* ── Gate Check Page Styles ─────────────────────────── */
+.gc-hero {
+  background: var(--black);
+  padding: 100px 0 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.gc-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% -10%, rgba(196,18,48,0.14) 0%, transparent 65%);
+  pointer-events: none;
+}
+.gc-hero-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 40px;
+  position: relative;
+}
+.gc-hero-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(52px, 8vw, 96px);
+  text-transform: uppercase;
+  color: var(--off-white);
+  line-height: 0.92;
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+.gc-hero-sub {
+  font-size: 18px;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Search */
+.gc-search-wrap {
+  position: relative;
+  max-width: 580px;
+  margin: 0 auto 12px;
+}
+.gc-input {
+  width: 100%;
+  padding: 20px 64px 20px 24px;
+  font-size: 17px;
+  font-family: var(--font-body);
+  background: #111118;
+  border: 1px solid #2a2a36;
+  border-radius: 4px;
+  color: var(--off-white);
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+.gc-input:focus { border-color: var(--red); }
+.gc-input::placeholder { color: #3a3a4a; }
+.gc-search-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--red);
+  border: none;
+  color: white;
+  width: 46px;
+  height: 46px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+.gc-search-btn:hover { background: #a50e26; }
+.gc-error { color: #ef4444; font-size: 13px; text-align: center; margin-top: 8px; }
+
+/* Quick picks */
+.gc-quick-picks {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+.qp {
+  background: #111118;
+  border: 1px solid #2a2a36;
+  color: #666;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.14s;
+}
+.qp:hover { background: #1a1a24; color: var(--off-white); border-color: #3a3a4a; }
+
+/* Loading */
+.gc-loading {
+  padding: 80px 0;
+  text-align: center;
+  background: var(--off-white);
+}
+.gc-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e4ddd5;
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.gc-loading-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+/* Result section */
+.gc-result-section { background: var(--off-white); padding: 0 0 60px; }
+.gc-result-inner { max-width: 760px; margin: 0 auto; padding: 0 40px; }
+
+/* Verdict banner */
+.gc-verdict {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 32px;
+  border-radius: 0 0 8px 8px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.gc-verdict-icon { font-size: 44px; flex-shrink: 0; }
+.gc-verdict-text { flex: 1; min-width: 200px; }
+.gc-verdict-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 28px;
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.gc-verdict-msg { font-size: 15px; line-height: 1.6; }
+.gc-verdict-cta { flex-shrink: 0; }
+
+/* Venue header */
+.gc-venue-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 28px;
+  background: var(--black);
+  border-radius: 6px 6px 0 0;
+  margin-bottom: 2px;
+  flex-wrap: wrap;
+}
+.gc-venue-name {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 24px;
+  text-transform: uppercase;
+  color: var(--off-white);
+  line-height: 1;
+}
+.gc-venue-info { font-size: 13px; color: #555; margin-top: 6px; }
+.gc-source-tag {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.gc-source-tag.verified { background: rgba(34,197,94,0.12); color: #22c55e; }
+.gc-source-tag.ai { background: rgba(245,158,11,0.12); color: #f59e0b; }
+
+/* Policy split */
+.gc-policy-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+.gc-allowed-col, .gc-blocked-col {
+  background: white;
+  border: 1px solid #e4ddd5;
+  padding: 20px 24px;
+}
+.gc-allowed-col { border-radius: 0; }
+.gc-blocked-col { border-radius: 0; }
+.gc-col-label {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0ece6;
+}
+.gc-col-label-green { color: #16a34a; }
+.gc-col-label-red { color: var(--red); }
+.gc-allowed-list, .gc-blocked-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.gc-allowed-list li, .gc-blocked-list li {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.gc-allowed-list li::before { content: '✓'; color: #16a34a; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.gc-blocked-list li::before { content: '✗'; color: var(--red); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+/* Specs row */
+.gc-specs-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-bottom: 2px;
+}
+.gc-spec {
+  background: #f8f4ef;
+  border: 1px solid #e4ddd5;
+  padding: 16px 20px;
+}
+.gc-spec-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 4px;
+}
+.gc-spec-value {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: var(--black);
+}
+.gc-spec-value.yes { color: #16a34a; }
+.gc-spec-value.no { color: var(--red); }
+
+/* Notes */
+.gc-notes {
+  padding: 16px 20px;
+  background: #fff9f0;
+  border: 1px solid #f0e4cc;
+  border-radius: 0 0 4px 4px;
+  font-size: 13px;
+  color: #8a7a5a;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+/* Bottom CTA */
+.gc-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 28px;
+  background: var(--black);
+  border-radius: 6px;
+  flex-wrap: wrap;
+}
+.gc-bottom-headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: var(--off-white);
+  margin-bottom: 4px;
+}
+.gc-bottom-sub { font-size: 13px; color: #555; }
+
+/* How it works */
+.gc-how { background: var(--black); padding: 80px 0; }
+.gc-how-inner { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+.gc-how-header { text-align: center; margin-bottom: 52px; }
+.gc-how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 40px; }
+.gc-how-card { padding: 32px 28px; }
+.gc-how-num {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 52px;
+  color: #1e1e28;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.gc-how-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: var(--off-white);
+  margin-bottom: 10px;
+}
+.gc-how-desc { font-size: 14px; color: #555; line-height: 1.7; }
+.gc-how-note {
+  text-align: center;
+  font-size: 13px;
+  color: #333;
+  padding: 20px;
+  background: #0a0a0e;
+  border: 1px solid #1e1e21;
+  border-radius: 4px;
+  line-height: 1.7;
+}
+
+/* Email gate section */
+.gc-email-gate-section {
+  background: var(--off-white);
+  padding: 80px 40px;
+  text-align: center;
+}
+.gc-email-gate-inner {
+  max-width: 480px;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid #e4ddd5;
+  border-radius: 8px;
+  padding: 48px 40px;
+}
+.gc-eg-icon { font-size: 48px; margin-bottom: 16px; }
+.gc-eg-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 28px;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+.gc-eg-body {
+  font-size: 15px;
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+.gc-eg-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.gc-eg-input {
+  flex: 1;
+  padding: 14px 16px;
+  border: 1px solid #d1c9be;
+  border-radius: 4px;
+  font-size: 15px;
+  font-family: var(--font-body);
+  background: #faf6f1;
+  color: var(--black);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.gc-eg-input:focus { border-color: var(--red); }
+.gc-eg-btn {
+  padding: 14px 20px;
+  background: var(--red);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.gc-eg-btn:hover { background: #a50e26; }
+.gc-eg-fine {
+  font-size: 12px;
+  color: #aaa;
+  line-height: 1.6;
+}
+.gc-eg-skip {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  margin-top: 4px;
+}
+.gc-eg-skip:hover { color: #666; }
+
+@media (max-width: 480px) {
+  .gc-eg-form { flex-direction: column; }
+  .gc-eg-btn { width: 100%; }
+  .gc-email-gate-inner { padding: 32px 24px; }
+}
+
+/* ── Language bar ─────────────────────────────────── */
+.gc-lang-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.gc-lang-label { font-size: 16px; }
+.gc-lang-btn {
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid #2a2a36;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.gc-lang-btn:hover { color: var(--off-white); border-color: #444; }
+.gc-lang-btn.active { background: var(--red); border-color: var(--red); color: white; }
+
+/* ── FIFA banner ─────────────────────────────────── */
+.gc-fifa-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(34,197,94,0.06);
+  border: 1px solid rgba(34,197,94,0.2);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: #aaa;
+  flex-wrap: wrap;
+  text-align: left;
+}
+.gc-fifa-ball { font-size: 18px; flex-shrink: 0; }
+.gc-fifa-link { color: #22c55e; font-weight: 700; text-decoration: none; white-space: nowrap; margin-left: auto; font-size: 12px; }
+.gc-fifa-link:hover { text-decoration: underline; }
+
+/* ── Quick pick tabs ─────────────────────────────── */
+.gc-qp-tabs {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+.gc-qp-tab {
+  padding: 6px 14px;
+  border-radius: 3px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: none;
+  border: 1px solid #2a2a36;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.gc-qp-tab:hover { color: var(--off-white); }
+.gc-qp-tab.active { background: var(--red); border-color: var(--red); color: white; }
+
+/* ── FIFA mode badge on result ───────────────────── */
+.gc-fifa-mode-badge {
+  background: rgba(34,197,94,0.08);
+  border: 1px solid rgba(34,197,94,0.2);
+  color: #22c55e;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+/* ── FIFA result note ────────────────────────────── */
+.gc-fifa-result-note {
+  background: rgba(34,197,94,0.05);
+  border: 1px solid rgba(34,197,94,0.15);
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin-top: 16px;
+  font-size: 13px;
+  color: #888;
+  line-height: 1.6;
+}
+.gc-fifa-result-note strong { color: var(--off-white); }
+
+/* ── RTL for Arabic ──────────────────────────────── */
+[dir="rtl"] .gc-hero-inner,
+[dir="rtl"] .gc-lang-bar { direction: rtl; }
+
+/* ── Confidence dots ─────────────────────────────── */
+.gc-confidence {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-right: 7px;
+}
+.gc-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2a2a36;
+}
+.gc-source-tag.verified .gc-dot.filled { background: #22c55e; }
+.gc-source-tag.estimated .gc-dot.filled { background: #f59e0b; }
+.gc-src-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.gc-source-tag.verified .gc-src-label { color: #22c55e; }
+.gc-source-tag.estimated .gc-src-label { color: #f59e0b; }
+
+/* ── Copy policy button ──────────────────────────── */
+.gc-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #444;
+  background: none;
+  border: 1px solid #2a2a36;
+  border-radius: 3px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.12s;
+  margin-top: 16px;
+}
+.gc-copy-btn:hover { color: var(--off-white); border-color: #444; }
+.gc-copy-btn.copied { color: #22c55e; border-color: rgba(34,197,94,0.4); }
+.gc-copy-btn svg { transition: transform 0.15s; }
+.gc-copy-btn.copied svg { transform: scale(0.9); }
+
+/* ── Search history chips ────────────────────────── */
+.gc-history-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.gc-history-label {
+  font-size: 11px;
+  color: #333;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.gc-history-chip {
+  font-size: 12px;
+  color: #555;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid #222;
+  border-radius: 20px;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: all 0.12s;
+  white-space: nowrap;
+}
+.gc-history-chip:hover { color: var(--off-white); border-color: #444; background: rgba(255,255,255,0.05); }
+
+/* ── Result slide-in animation ───────────────────── */
+@keyframes resultSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.gc-result-section.animating { animation: resultSlideIn 0.28s ease forwards; }
+
+/* ── Loading progress bar ────────────────────────── */
+.gc-loading-bar {
+  width: 100%;
+  height: 2px;
+  background: #1a1a24;
+  border-radius: 2px;
+  margin-top: 16px;
+  overflow: hidden;
+}
+.gc-loading-bar-fill {
+  height: 100%;
+  background: var(--red);
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+/* ── Keyboard shortcut hint ──────────────────────── */
+.gc-kbd-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #2a2a36;
+  margin-top: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.gc-kbd-hint kbd {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 3px;
+  padding: 1px 5px;
+  font-family: monospace;
+  font-size: 11px;
+  color: #333;
+}
+.gc-hero:hover .gc-kbd-hint { color: #333; }
+</style>
+
+<script>
+// ── i18n strings ──────────────────────────────────────────────────────────────
+const GC_I18N = {
+  en: {
+    heroTitle: 'Is My Bag<br><span class="accent">Allowed?</span>',
+    heroSub: 'Type any stadium, arena, or team. Get the exact bag policy — before you leave the house.',
+    placeholder: 'Stadium name, team, or city...',
+    checkBtn: 'Check',
+    loading: 'Looking up policy...',
+    emailGateTitle: "We'll Look That Up",
+    emailGateBody: 'not in our database yet. Enter your email and we\'ll find the policy using AI.',
+    emailPlaceholder: 'your@email.com',
+    emailSubmit: 'Look It Up →',
+    emailFine: 'No spam. One email with your answer.',
+    emailSkip: 'Skip — show general guidance',
+    allowed: '✓ What You Can Bring',
+    blocked: '✗ What\'s Not Allowed',
+    buyNow: 'Buy Now — $25',
+    checkAnother: 'Check Another Venue →',
+    errorEmpty: 'Enter a stadium or venue name.',
+    errorFail: 'Lookup failed. Please try again.',
+    fifaBanner: 'FIFA World Cup 2026™ venue detected. FIFA enforces clear bag policy at all 11 US host stadiums.',
+    fifaLink: 'Full World Cup Guide →',
+    fifaNote: '<strong>FIFA World Cup 2026™ note:</strong> FIFA enforces a uniform clear bag policy at all US host stadiums. Non-compliant bags are turned away — there is no bag check service at venues. International fans: this rule is stricter than most stadiums worldwide.',
+    verdictGood: "You're Good to Go",
+    verdictCheck: 'Check This Venue',
+  },
+  es: {
+    heroTitle: '¿Se Permite<br><span class="accent">Mi Bolsa?</span>',
+    heroSub: 'Escribe el nombre del estadio, equipo o ciudad. Obtén la política exacta de bolsas antes de salir.',
+    placeholder: 'Estadio, equipo o ciudad...',
+    checkBtn: 'Buscar',
+    loading: 'Buscando política de bolsas...',
+    emailGateTitle: 'Lo Buscamos Por Ti',
+    emailGateBody: 'no está en nuestra base de datos todavía. Ingresa tu correo y buscamos la política con IA.',
+    emailPlaceholder: 'tu@correo.com',
+    emailSubmit: 'Buscar →',
+    emailFine: 'Sin spam. Un email con tu respuesta.',
+    emailSkip: 'Omitir — mostrar guía general',
+    allowed: '✓ Lo que Puedes Llevar',
+    blocked: '✗ Lo que No se Permite',
+    buyNow: 'Comprar Ahora — $25',
+    checkAnother: 'Buscar Otro Estadio →',
+    errorEmpty: 'Ingresa el nombre de un estadio o recinto.',
+    errorFail: 'Búsqueda fallida. Por favor, inténtalo de nuevo.',
+    fifaBanner: 'Sede de la Copa Mundial FIFA 2026™ detectada. FIFA aplica política de bolsa transparente en los 11 estadios sede de EE.UU.',
+    fifaLink: 'Guía Copa del Mundo →',
+    fifaNote: '<strong>Nota Copa Mundial FIFA 2026™:</strong> FIFA aplica una política uniforme de bolsa transparente en todos los estadios sede de EE.UU. No se admiten bolsas que no cumplan los requisitos — no hay servicio de consigna. Aficionados internacionales: esta norma es más estricta que en la mayoría de estadios del mundo.',
+    verdictGood: 'Todo en Orden',
+    verdictCheck: 'Verifica Este Estadio',
+  },
+  pt: {
+    heroTitle: 'Minha Bolsa É<br><span class="accent">Permitida?</span>',
+    heroSub: 'Digite o nome do estádio, time ou cidade. Obtenha a política exata de bolsas antes de sair de casa.',
+    placeholder: 'Estádio, time ou cidade...',
+    checkBtn: 'Verificar',
+    loading: 'Consultando política de bolsas...',
+    emailGateTitle: 'Vamos Verificar Isso',
+    emailGateBody: 'não está em nossa base de dados ainda. Informe seu e-mail e buscaremos a política com IA.',
+    emailPlaceholder: 'voce@email.com',
+    emailSubmit: 'Verificar →',
+    emailFine: 'Sem spam. Um e-mail com sua resposta.',
+    emailSkip: 'Pular — mostrar orientação geral',
+    allowed: '✓ O que Você Pode Levar',
+    blocked: '✗ O que Não é Permitido',
+    buyNow: 'Comprar Agora — $25',
+    checkAnother: 'Verificar Outro Estádio →',
+    errorEmpty: 'Digite o nome de um estádio ou arena.',
+    errorFail: 'Falha na consulta. Tente novamente.',
+    fifaBanner: 'Sede da Copa do Mundo FIFA 2026™ detectada. A FIFA aplica política de bolsa transparente em todas as 11 sedes dos EUA.',
+    fifaLink: 'Guia Copa do Mundo →',
+    fifaNote: '<strong>Nota Copa do Mundo FIFA 2026™:</strong> A FIFA aplica uma política uniforme de bolsa transparente em todas as sedes dos EUA. Bolsas fora do padrão são proibidas — não há serviço de guarda-volumes. Torcedores internacionais: esta regra é mais rígida que na maioria dos estádios do mundo.',
+    verdictGood: 'Tudo Certo',
+    verdictCheck: 'Verifique Este Estádio',
+  },
+  fr: {
+    heroTitle: 'Mon Sac Est-il<br><span class="accent">Autorisé?</span>',
+    heroSub: 'Tapez le nom du stade, de l\'équipe ou de la ville. Obtenez la politique exacte avant de partir.',
+    placeholder: 'Stade, équipe ou ville...',
+    checkBtn: 'Vérifier',
+    loading: 'Recherche de la politique de sacs...',
+    emailGateTitle: 'Nous Allons Chercher',
+    emailGateBody: 'n\'est pas encore dans notre base de données. Entrez votre email et nous chercherons avec IA.',
+    emailPlaceholder: 'vous@email.com',
+    emailSubmit: 'Rechercher →',
+    emailFine: 'Pas de spam. Un email avec votre réponse.',
+    emailSkip: 'Ignorer — voir les consignes générales',
+    allowed: '✓ Ce que Vous Pouvez Apporter',
+    blocked: '✗ Ce qui N\'est Pas Autorisé',
+    buyNow: 'Acheter — $25',
+    checkAnother: 'Vérifier un Autre Stade →',
+    errorEmpty: 'Entrez le nom d\'un stade ou d\'une salle.',
+    errorFail: 'Recherche échouée. Veuillez réessayer.',
+    fifaBanner: 'Site de la Coupe du Monde FIFA 2026™ détecté. La FIFA applique une politique de sac transparent dans les 11 stades américains.',
+    fifaLink: 'Guide Coupe du Monde →',
+    fifaNote: '<strong>Note Coupe du Monde FIFA 2026™ :</strong> La FIFA applique une politique uniforme de sac transparent dans tous les stades américains. Les sacs non conformes sont refusés — il n\'y a pas de service de consigne. Supporters internationaux : cette règle est plus stricte que dans la plupart des stades mondiaux.',
+    verdictGood: 'Vous Êtes Prêt',
+    verdictCheck: 'Vérifiez Ce Stade',
+  },
+  de: {
+    heroTitle: 'Ist Meine Tasche<br><span class="accent">Erlaubt?</span>',
+    heroSub: 'Geben Sie Stadion, Team oder Stadt ein. Erhalten Sie die genaue Taschenrichtlinie — bevor Sie das Haus verlassen.',
+    placeholder: 'Stadion, Team oder Stadt...',
+    checkBtn: 'Prüfen',
+    loading: 'Taschenrichtlinie wird abgerufen...',
+    emailGateTitle: 'Wir Schauen Nach',
+    emailGateBody: 'ist noch nicht in unserer Datenbank. Geben Sie Ihre E-Mail ein und wir suchen mit KI.',
+    emailPlaceholder: 'sie@email.com',
+    emailSubmit: 'Suchen →',
+    emailFine: 'Kein Spam. Eine E-Mail mit Ihrer Antwort.',
+    emailSkip: 'Überspringen — allgemeine Hinweise anzeigen',
+    allowed: '✓ Was Sie Mitbringen Dürfen',
+    blocked: '✗ Was Nicht Erlaubt Ist',
+    buyNow: 'Jetzt Kaufen — $25',
+    checkAnother: 'Anderes Stadion Prüfen →',
+    errorEmpty: 'Geben Sie den Namen eines Stadions oder einer Arena ein.',
+    errorFail: 'Suche fehlgeschlagen. Bitte versuchen Sie es erneut.',
+    fifaBanner: 'FIFA Fußball-WM 2026™ Austragungsort erkannt. Die FIFA setzt in allen 11 US-Stadien eine Klartaschen-Richtlinie durch.',
+    fifaLink: 'WM-Guide →',
+    fifaNote: '<strong>Hinweis FIFA Fußball-WM 2026™:</strong> Die FIFA setzt eine einheitliche Klartaschen-Richtlinie in allen US-Stadien durch. Nicht konforme Taschen werden abgewiesen — es gibt keine Gepäckaufbewahrung. Internationale Fans: Diese Regel ist strenger als in den meisten Stadien weltweit.',
+    verdictGood: 'Alles In Ordnung',
+    verdictCheck: 'Dieses Stadion Prüfen',
+  },
+  ar: {
+    heroTitle: 'هل حقيبتي<br><span class="accent">مسموح بها؟</span>',
+    heroSub: 'اكتب اسم الملعب أو الفريق أو المدينة. احصل على سياسة الحقيبة الدقيقة قبل مغادرة المنزل.',
+    placeholder: 'الملعب أو الفريق أو المدينة...',
+    checkBtn: 'تحقق',
+    loading: 'البحث عن سياسة الحقائب...',
+    emailGateTitle: 'سنبحث عن ذلك',
+    emailGateBody: 'غير موجود في قاعدة بياناتنا بعد. أدخل بريدك الإلكتروني وسنبحث بالذكاء الاصطناعي.',
+    emailPlaceholder: 'بريدك@الإلكتروني.com',
+    emailSubmit: 'ابحث →',
+    emailFine: 'لا بريد عشوائي. رسالة واحدة بإجابتك.',
+    emailSkip: 'تخطي — عرض الإرشادات العامة',
+    allowed: '✓ ما يمكنك إحضاره',
+    blocked: '✗ ما هو غير مسموح به',
+    buyNow: 'اشترِ الآن — $25',
+    checkAnother: 'التحقق من ملعب آخر →',
+    errorEmpty: 'أدخل اسم الملعب أو القاعة.',
+    errorFail: 'فشل البحث. يرجى المحاولة مرة أخرى.',
+    fifaBanner: 'تم اكتشاف ملعب كأس العامم FIFA 2026™. تطبق FIFA سياسة الحقيبة الشفافة في جميع الملاعب الأمريكية الـ 11.',
+    fifaLink: 'دليل كأس العامم →',
+    fifaNote: '<strong>ملاحظة كأس العالم FIFA 2026™:</strong> تطبق FIFA سياسة موحدة للحقيبة الشفافة في جميع الملاعب الأمريكية. الحقائب غير المطابقة مرفوضة — لا توجد خدمة تخزين الأمتعة. المشجعون الدوليون: هذه القاعدة أكثر صرامة من معظم الملاعب في العالم.',
+    verdictGood: 'أنت جاهز للدخول',
+    verdictCheck: 'تحقق من هذا الملعب',
+  }
+};
+
+// ── FIFA host venue detection ─────────────────────────────────────────────────
+const FIFA_VENUES_SET = new Set([
+  'mercedes-benz stadium','att stadium','at&t stadium','arrowhead stadium',
+  'sofi stadium','hard rock stadium','nrg stadium','metlife stadium',
+  'lincoln financial field','levis stadium',"levi's stadium",'lumen field','gillette stadium',
+  'atlanta','dallas','kansas city','los angeles','miami','houston',
+  'new york','new jersey','philadelphia','san francisco','seattle','boston','foxborough'
+]);
+
+function isFifaVenue(query) {
+  const q = (query || '').toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+  return FIFA_VENUES_SET.has(q) || [...FIFA_VENUES_SET].some(k => q.includes(k) || k.includes(q.split(' ').pop()));
+}
+
+// ── Active language ───────────────────────────────────────────────────────────
+let _lang = 'en';
+
+function t(key) { return (GC_I18N[_lang] || GC_I18N.en)[key] || GC_I18N.en[key] || key; }
+
+function applyLang(lang) {
+  _lang = lang;
+  const isRTL = lang === 'ar';
+  document.getElementById('gcHeroTitle').innerHTML = t('heroTitle');
+  document.getElementById('gcHeroSub').textContent = t('heroSub');
+  document.getElementById('gcInput').placeholder    = t('placeholder');
+  document.getElementById('gcLoadingText').textContent = t('loading');
+  document.getElementById('gcHeroTitle').closest('.gc-hero-inner').setAttribute('dir', isRTL ? 'rtl' : 'ltr');
+
+  // Labels in result card
+  const al = document.querySelector('.gc-col-label-green');
+  const bl = document.querySelector('.gc-col-label-red');
+  if (al) al.textContent = t('allowed');
+  if (bl) bl.textContent = t('blocked');
+  const againBtn = document.getElementById('gcAgainBtn');
+  if (againBtn) againBtn.textContent = t('checkAnother');
+  const buyBtns = document.querySelectorAll('.gc-bottom-row .btn');
+  buyBtns.forEach(b => b.textContent = t('buyNow'));
+
+  // FIFA banner text
+  document.getElementById('gcFifaBannerText').innerHTML = t('fifaBanner');
+  const fifaLink = document.getElementById('gcFifaLink');
+  if (fifaLink) fifaLink.textContent = t('fifaLink');
+
+  // Email gate
+  const egTitle = document.querySelector('.gc-eg-title');
+  const egFine  = document.querySelector('.gc-eg-fine');
+  const egSkip  = document.getElementById('gcEgSkip');
+  const egInput = document.getElementById('gcEmailInput');
+  const egBtn   = document.getElementById('gcEmailSubmit');
+  if (egTitle) egTitle.textContent = t('emailGateTitle');
+  if (egInput) egInput.placeholder = t('emailPlaceholder');
+  if (egBtn)   egBtn.textContent   = t('emailSubmit');
+  if (egSkip)  egSkip.textContent  = t('emailSkip');
+
+  // Active button state
+  document.querySelectorAll('.gc-lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+}
+
+// ── FIFA Mode toggle ──────────────────────────────────────────────────────────
+function showFifaMode(query) {
+  const isFifa = isFifaVenue(query);
+  document.getElementById('gcFifaBanner').style.display = isFifa ? 'flex' : 'none';
+}
+
+function showFifaResultBadge(isFifa) {
+  const badge = document.getElementById('gcFifaModeBadge');
+  if (badge) badge.style.display = isFifa ? 'inline-block' : 'none';
+  // Also inject/remove the FIFA note in the result
+  const existing = document.getElementById('gcFifaResultNote');
+  if (isFifa && !existing) {
+    const note = document.createElement('div');
+    note.id = 'gcFifaResultNote';
+    note.className = 'gc-fifa-result-note';
+    note.innerHTML = t('fifaNote');
+    const specsRow = document.getElementById('gcSpecsRow');
+    if (specsRow) specsRow.after(note);
+  } else if (!isFifa && existing) {
+    existing.remove();
+  } else if (isFifa && existing) {
+    existing.innerHTML = t('fifaNote');
+  }
+}
+
+// ── QP tabs ───────────────────────────────────────────────────────────────────
+document.querySelectorAll('.gc-qp-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.gc-qp-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('gcQpSport').style.display = tab.dataset.tab === 'sport' ? 'flex' : 'none';
+    document.getElementById('gcQpFifa').style.display  = tab.dataset.tab === 'fifa'  ? 'flex' : 'none';
+  });
+});
+
+// ── Lang buttons ──────────────────────────────────────────────────────────────
+document.querySelectorAll('.gc-lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+});
+
+// Track FIFA state for result rendering
+let _lastQueryIsFifa = false;
+</script>
+
+<script>
+// ── UX ENHANCEMENT LAYER ──────────────────────────────────────────────────────
+
+// 1. CYCLING PLACEHOLDER — venues rotate every 3s when input is empty/unfocused
+const PLACEHOLDER_VENUES = [
+  'Try: Mercedes-Benz Stadium',
+  'Try: MSG',
+  'Try: Arrowhead Stadium',
+  'Try: SoFi Stadium',
+  'Try: Lumen Field',
+  'Try: Lambeau Field',
+  'Try: Barclays Center',
+  'Try: Chase Center',
+  'Try: AT&T Stadium',
+  'Try: Hard Rock Stadium',
+];
+let _phIdx = 0, _phInterval = null;
+function startPlaceholderCycle() {
+  if (_phInterval) return;
+  _phInterval = setInterval(() => {
+    const inp = document.getElementById('gcInput');
+    if (inp && !inp.value && document.activeElement !== inp) {
+      _phIdx = (_phIdx + 1) % PLACEHOLDER_VENUES.length;
+      inp.placeholder = PLACEHOLDER_VENUES[_phIdx];
+    }
+  }, 3000);
+}
+document.addEventListener('DOMContentLoaded', startPlaceholderCycle);
+setTimeout(startPlaceholderCycle, 500);
+
+// 2. KEYBOARD SHORTCUT — / focuses search
+document.addEventListener('keydown', e => {
+  const inp = document.getElementById('gcInput');
+  if (!inp) return;
+  if (e.key === '/' && document.activeElement !== inp && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+    e.preventDefault();
+    inp.focus();
+    inp.select();
+  }
+  if (e.key === 'Escape' && document.activeElement === inp) {
+    inp.value = '';
+    inp.blur();
+    const gcError = document.getElementById('gcError');
+    if (gcError) gcError.style.display = 'none';
+  }
+});
+
+// 3. SEARCH HISTORY — last 3 searches stored in sessionStorage, shown as chips
+const HISTORY_KEY = 'gr_gc_history';
+function getHistory() {
+  try { return JSON.parse(sessionStorage.getItem(HISTORY_KEY) || '[]'); } catch { return []; }
+}
+function addHistory(q) {
+  let h = getHistory().filter(x => x.toLowerCase() !== q.toLowerCase());
+  h.unshift(q);
+  h = h.slice(0, 4);
+  try { sessionStorage.setItem(HISTORY_KEY, JSON.stringify(h)); } catch {}
+  renderHistory();
+}
+function renderHistory() {
+  const row = document.getElementById('gcHistoryRow');
+  if (!row) return;
+  const h = getHistory();
+  if (!h.length) { row.style.display = 'none'; return; }
+  // Clear existing chips (keep label)
+  [...row.querySelectorAll('.gc-history-chip')].forEach(c => c.remove());
+  h.forEach(v => {
+    const chip = document.createElement('button');
+    chip.className = 'gc-history-chip';
+    chip.textContent = v;
+    chip.addEventListener('click', () => {
+      const inp = document.getElementById('gcInput');
+      if (inp) { inp.value = v; inp.dispatchEvent(new Event('input')); }
+      if (typeof lookup === 'function') lookup(v);
+    });
+    row.appendChild(chip);
+  });
+  row.style.display = 'flex';
+}
+// Render on load
+setTimeout(renderHistory, 300);
+
+// 4. COPY POLICY BUTTON
+function setupCopyBtn(data) {
+  const btn = document.getElementById('gcCopyBtn');
+  if (!btn || !data) return;
+  btn.onclick = () => {
+    const venueName = data.venue?.name || 'This venue';
+    const maxSize = data.policy?.max_size || '12×6×12';
+    const clutch = data.policy?.clutch_allowed ? ` Small clutch up to ${data.policy.clutch_size || '4.5×6.5'}″ also allowed.` : '';
+    const text = `📋 ${venueName} Bag Policy\n\n✅ Clear bag required — max ${maxSize}″.${clutch}\n❌ Backpacks and non-clear bags not allowed.\n\nChecked via GateReady™ Gate Check — begateready.com/gate-check`;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Policy Summary';
+      }, 2000);
+    }).catch(() => {
+      // Fallback for non-https
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = 'Copy Policy Summary'; }, 1500);
+    });
+  };
+}
+
+// 5. LOADING PROGRESS BAR
+let _progressTimer = null;
+function startProgressBar() {
+  const bar = document.getElementById('gcLoadingBar');
+  if (!bar) return;
+  bar.style.width = '0%';
+  bar.style.transition = 'none';
+  setTimeout(() => {
+    bar.style.transition = 'width 0.6s ease';
+    bar.style.width = '35%';
+    setTimeout(() => { bar.style.width = '65%'; }, 700);
+    setTimeout(() => { bar.style.width = '85%'; }, 1400);
+  }, 50);
+}
+function finishProgressBar() {
+  const bar = document.getElementById('gcLoadingBar');
+  if (!bar) return;
+  bar.style.transition = 'width 0.2s ease';
+  bar.style.width = '100%';
+  setTimeout(() => { bar.style.width = '0%'; bar.style.transition = 'none'; }, 400);
+}
+
+// 6. RESULT ANIMATION — slide in when result appears
+function animateResult() {
+  const r = document.getElementById('gcResult');
+  if (!r) return;
+  r.classList.remove('animating');
+  void r.offsetWidth; // reflow
+  r.classList.add('animating');
+  setTimeout(() => r.classList.remove('animating'), 400);
+}
+
+// Hook into existing functions by patching them
+const _origShowLoading = window.showLoading;
+const _origShowResult  = window.showResult;
+
+// Patch showLoading
+window.showLoading = function(q) {
+  startProgressBar();
+  if (_origShowLoading) _origShowLoading(q);
+};
+
+// Patch showResult — add history, copy btn, animation
+window.showResult = function(data) {
+  finishProgressBar();
+  if (_origShowResult) _origShowResult(data);
+  animateResult();
+  if (data && data.venue && data.venue.name) addHistory(data.venue.name);
+  setupCopyBtn(data);
+};
+
+// Also patch lookup to add to history on query
+const _origLookup = window.lookup;
+window.lookup = function(q) {
+  if (q && q.trim()) {
+    // We'll add to history on result render, not here
+  }
+  if (_origLookup) _origLookup(q);
+};
+</script>
+const gcBtn     = document.getElementById('gcBtn');
+const gcResult  = document.getElementById('gcResult');
+const gcLoading = document.getElementById('gcLoading');
+const gcHow     = document.getElementById('gcHow');
+
+function showLoading(q) {
+  gcResult.style.display = 'none';
+  gcHow.style.display = 'none';
+  gcLoading.style.display = 'block';
+  document.getElementById('gcLoadingText').textContent = `Checking policy for "${q}"...`;
+  gcLoading.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function showResult(data) {
+  gcLoading.style.display = 'none';
+  gcResult.style.display = 'block';
+
+  // FIFA Mode
+  showFifaResultBadge(_lastQueryIsFifa);
+
+  const found = data.found !== false;
+
+  // Verdict
+  const verdict = document.getElementById('gcVerdict');
+  const vIcon   = document.getElementById('gcVerdictIcon');
+  const vTitle  = document.getElementById('gcVerdictTitle');
+  const vMsg    = document.getElementById('gcVerdictMsg');
+  const vCTA    = document.getElementById('gcVerdictCTA');
+
+  if (!found) {
+    verdict.style.background = '#f0ece6';
+    verdict.style.border = '1px solid #e4ddd5';
+    vIcon.textContent = '🔍';
+    vTitle.textContent = 'Venue Not Found';
+    vTitle.style.color = '#888';
+    vMsg.style.color = '#888';
+    vMsg.textContent = data.message;
+    vCTA.style.display = 'none';
+    document.querySelector('.gc-venue-header').style.display = 'none';
+    document.querySelector('.gc-policy-split').style.display = 'none';
+    document.getElementById('gcSpecsRow').style.display = 'none';
+
+    // Show what-to-do fallback
+    if (data.what_to_do) {
+      const notes = document.getElementById('gcNotes');
+      notes.style.display = 'block';
+      notes.innerHTML = '<strong>General guidance:</strong><br>' + data.what_to_do.map(i => '• ' + i).join('<br>');
+    }
+    gcResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+
+  // Approved
+  verdict.style.background = data.gateready_approved
+    ? 'linear-gradient(135deg,#f0fdf4,#dcfce7)'
+    : 'linear-gradient(135deg,#fff7f7,#fee2e2)';
+  verdict.style.border = data.gateready_approved
+    ? '1px solid #bbf7d0' : '1px solid #fecaca';
+  vIcon.textContent  = data.gateready_approved ? '✅' : '⚠️';
+  vTitle.textContent = data.gateready_approved ? 'You\'re Good to Go' : 'Check This Venue';
+  vTitle.style.color = data.gateready_approved ? '#15803d' : '#dc2626';
+  vMsg.style.color   = data.gateready_approved ? '#166534' : '#991b1b';
+  vMsg.textContent   = data.message;
+  vCTA.style.display = 'flex';
+
+  // Venue header
+  document.querySelector('.gc-venue-header').style.display = 'flex';
+  document.getElementById('gcVenueName').textContent = data.venue.name;
+  document.getElementById('gcVenueInfo').textContent =
+    [data.venue.city, data.venue.state].filter(Boolean).join(', ') +
+    (data.venue.teams?.length ? ' · ' + data.venue.teams.join(', ') : '') +
+    (data.venue.league?.length ? ' · ' + data.venue.league.join(' / ') : '');
+
+  const srcTag = document.getElementById('gcSourceTag');
+  if (data.policy.llm_generated) {
+    srcTag.innerHTML = '<span class="gc-confidence"><span class="gc-dot filled"></span><span class="gc-dot filled"></span><span class="gc-dot filled"></span><span class="gc-dot"></span><span class="gc-dot"></span></span><span class="gc-src-label">Policy estimated — verify with venue</span>';
+    srcTag.className = 'gc-source-tag estimated';
+  } else {
+    srcTag.innerHTML = '<span class="gc-confidence"><span class="gc-dot filled"></span><span class="gc-dot filled"></span><span class="gc-dot filled"></span><span class="gc-dot filled"></span><span class="gc-dot filled"></span></span><span class="gc-src-label">Verified policy</span>';
+    srcTag.className = 'gc-source-tag verified';
+  }
+
+  // What you can bring
+  document.querySelector('.gc-policy-split').style.display = 'grid';
+  const allowedList = document.getElementById('gcAllowedList');
+  allowedList.innerHTML = (data.policy.what_you_can_bring || [
+    `Clear bag (max ${data.policy.max_size || '12×6×12'}″)`,
+    data.policy.clutch_allowed ? `Small clutch${data.policy.clutch_size ? ' (up to ' + data.policy.clutch_size + '″)' : ''}` : null,
+    'Phone, keys, wallet inside clear bag',
+    data.policy.medical_exception ? 'Medical/diaper bag with staff notification' : null
+  ].filter(Boolean)).map(i => `<li>${i}</li>`).join('');
+
+  // What's not allowed
+  const blocked = [];
+  if (data.policy.backpacks_allowed === false) blocked.push('Backpacks or large tote bags');
+  blocked.push('Non-clear bags of any kind');
+  blocked.push('Bags larger than ' + (data.policy.max_size || '12×6×12') + '″');
+  document.getElementById('gcBlockedList').innerHTML = blocked.map(i => `<li>${i}</li>`).join('');
+
+  // Specs row
+  document.getElementById('gcSpecsRow').style.display = 'grid';
+  document.getElementById('gcSpecsRow').innerHTML = [
+    { label: 'Max Bag Size', value: (data.policy.max_size || '12×6×12').replace(/x/g,'″×') + '″', cls: '' },
+    { label: 'Clear Bag Required', value: data.policy.clear_bag_required ? 'YES' : 'NO', cls: data.policy.clear_bag_required ? 'no' : 'yes' },
+    { label: 'Small Clutch OK', value: data.policy.clutch_allowed ? 'YES' : 'NO', cls: data.policy.clutch_allowed ? 'yes' : 'no' },
+  ].map(s => `<div class="gc-spec"><div class="gc-spec-label">${s.label}</div><div class="gc-spec-value ${s.cls}">${s.value}</div></div>`).join('');
+
+  // Notes
+  const notesEl = document.getElementById('gcNotes');
+  if (data.policy.notes) {
+    notesEl.style.display = 'block';
+    notesEl.textContent = '📋 ' + data.policy.notes;
+    if (data.policy.llm_generated) notesEl.textContent += ' Always verify with the venue website before your event.';
+  } else {
+    notesEl.style.display = 'none';
+  }
+
+  gcResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Email gate section (shown on DB miss) ─────────────────────────────────────
+const gcEmailGate  = document.getElementById('gcEmailGate');
+const gcEmailInput = document.getElementById('gcEmailInput');
+const gcEmailBtn   = document.getElementById('gcEmailSubmit');
+let   _pendingQuery = '';
+
+function showEmailGate(q) {
+  _pendingQuery = q;
+  gcLoading.style.display = 'none';
+  gcResult.style.display  = 'none';
+  gcHow.style.display     = 'none';
+  gcEmailGate.style.display = 'block';
+  document.getElementById('gcEgQuery').textContent = `"${q}"`;
+  gcEmailInput.focus();
+  gcEmailGate.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+async function submitEmail() {
+  const email = gcEmailInput.value.trim();
+  if (!email || !email.includes('@')) {
+    gcEmailInput.style.borderColor = '#ef4444';
+    gcEmailInput.focus();
+    setTimeout(() => gcEmailInput.style.borderColor = '', 1200);
+    return;
+  }
+  gcEmailGate.style.display = 'none';
+  showLoading(_pendingQuery);
+  document.getElementById('gcLoadingText').textContent = 'Looking up policy — this may take a moment for new venues...';
+  try {
+    const res  = await fetch('/api/gate-check-lookup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: _pendingQuery, email })
+    });
+    showResult(await res.json());
+  } catch(e) {
+    gcLoading.style.display = 'none';
+    gcHow.style.display = 'block';
+    document.getElementById('gcError').textContent = 'Lookup failed. Please try again.';
+    document.getElementById('gcError').style.display = 'block';
+  }
+}
+
+gcEmailBtn?.addEventListener('click', submitEmail);
+gcEmailInput?.addEventListener('keydown', e => { if (e.key === 'Enter') submitEmail(); });
+document.getElementById('gcEgSkip')?.addEventListener('click', () => {
+  gcEmailGate.style.display = 'none';
+  gcHow.style.display = 'block';
+});
+
+// ── Main lookup ───────────────────────────────────────────────────────────────
+async function lookup(q) {
+  q = q.trim();
+  if (!q) { document.getElementById('gcError').textContent = t('errorEmpty'); document.getElementById('gcError').style.display = 'block'; return; }
+  document.getElementById('gcError').style.display = 'none';
+  _lastQueryIsFifa = isFifaVenue(q);
+  showFifaMode(q);
+  showLoading(q);
+  try {
+    const res  = await fetch('/api/gate-check', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: q })
+    });
+    const data = await res.json();
+    if (data.email_required) {
+      showEmailGate(q);
+    } else {
+      showResult(data);
+    }
+  } catch(e) {
+    gcLoading.style.display = 'none';
+    gcHow.style.display = 'block';
+    document.getElementById('gcError').textContent = 'Lookup failed. Please try again.';
+    document.getElementById('gcError').style.display = 'block';
+  }
+}
+
+gcBtn.addEventListener('click', () => lookup(gcInput.value));
+gcInput.addEventListener('keydown', e => { if (e.key === 'Enter') lookup(gcInput.value); });
+document.querySelectorAll('.qp').forEach(b => b.addEventListener('click', () => { gcInput.value = b.dataset.q; lookup(b.dataset.q); }));
+document.getElementById('gcAgainBtn')?.addEventListener('click', () => {
+  gcResult.style.display = 'none';
+  gcEmailGate.style.display = 'none';
+  gcHow.style.display = 'block';
+  gcInput.value = '';
+  gcInput.focus();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+
+@media (max-width: 700px) {
+  .gc-policy-split { grid-template-columns: 1fr; }
+  .gc-specs-row { grid-template-columns: 1fr 1fr; }
+  .gc-how-grid { grid-template-columns: 1fr; }
+  .gc-verdict { flex-direction: column; }
+}
