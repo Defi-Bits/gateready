@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GateReady™ Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--red:#C41230;--black:#05050d;--card:#0d0d18;--border:#1a1a2e;--text:#f2ede6;--muted:#666;--green:#22c55e;--amber:#f59e0b;--blue:#60a5fa;--purple:#a855f7;--font-d:'Barlow Condensed',sans-serif;--font-b:'Barlow',sans-serif;}
+body{font-family:var(--font-b);background:var(--black);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+/* ── TOPBAR ─────────────────── */
+.topbar{background:#0a0a12;border-bottom:2px solid var(--red);padding:0 32px;height:54px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+.topbar-brand{font-family:var(--font-d);font-weight:900;font-size:15px;letter-spacing:.15em;text-transform:uppercase;color:var(--red);}
+.topbar-badge{background:rgba(196,18,48,.15);border:1px solid rgba(196,18,48,.3);color:var(--red);font-family:var(--font-d);font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:3px 10px;border-radius:40px;margin-left:12px;}
+.topbar-right{display:flex;align-items:center;gap:16px;font-size:12px;color:#444;}
+.topbar-user{color:#666;}
+
+/* ── SIDEBAR + LAYOUT ──────── */
+.layout{display:flex;min-height:calc(100vh - 54px);}
+.sidebar{width:210px;background:#08080f;border-right:1px solid #111;padding:20px 0;flex-shrink:0;position:sticky;top:54px;height:calc(100vh - 54px);overflow-y:auto;}
+.sidebar-section{font-family:var(--font-d);font-size:9px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#222;padding:14px 20px 6px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;font-size:13px;color:#444;cursor:pointer;transition:all .12s;border-left:2px solid transparent;text-decoration:none;}
+.nav-item:hover{color:#888;background:rgba(255,255,255,.02);}
+.nav-item.active{color:var(--text);border-left-color:var(--red);background:rgba(196,18,48,.05);}
+.nav-icon{font-size:14px;width:16px;text-align:center;}
+.nav-badge{margin-left:auto;background:var(--amber);color:#000;font-family:var(--font-d);font-size:9px;font-weight:700;padding:1px 6px;border-radius:40px;}
+
+/* ── MAIN ───────────────────── */
+.main{flex:1;padding:32px;overflow-x:hidden;}
+.section{display:none;}.section.active{display:block;}
+
+/* ── KPI CARDS ──────────────── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:22px 20px;position:relative;overflow:hidden;}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent,var(--red));}
+.kpi-val{font-family:var(--font-d);font-weight:900;font-size:34px;color:var(--text);line-height:1;}
+.kpi-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:6px;}
+.kpi-delta{font-size:11px;margin-top:8px;}
+.up{color:var(--green);}.warn{color:var(--amber);}.down{color:#ef4444;}
+
+/* ── CARDS ──────────────────── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:6px;margin-bottom:18px;}
+.card-hd{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.card-title{font-family:var(--font-d);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#777;}
+.card-body{padding:18px;}
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+
+/* ── TABLE ──────────────────── */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th{font-family:var(--font-d);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:#2a2a3a;padding:10px 14px;text-align:left;border-bottom:1px solid #111;}
+td{padding:11px 14px;font-size:13px;color:#999;border-bottom:1px solid #0d0d12;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.02);}
+td strong{color:var(--text);}
+
+/* ── PILLS ──────────────────── */
+.pill{display:inline-block;font-family:var(--font-d);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:3px 10px;border-radius:40px;}
+.pill-green {background:rgba(34,197,94,.1); color:var(--green);  border:1px solid rgba(34,197,94,.2);}
+.pill-amber {background:rgba(245,158,11,.1);color:var(--amber);  border:1px solid rgba(245,158,11,.2);}
+.pill-red   {background:rgba(239,68,68,.1); color:#ef4444;       border:1px solid rgba(239,68,68,.2);}
+.pill-blue  {background:rgba(96,165,250,.1);color:var(--blue);   border:1px solid rgba(96,165,250,.2);}
+.pill-purple{background:rgba(168,85,247,.1);color:var(--purple); border:1px solid rgba(168,85,247,.2);}
+.pill-gray  {background:rgba(255,255,255,.05);color:#555;        border:1px solid #1a1a2e;}
+
+/* ── BUTTONS ─────────────────── */
+.btn{font-family:var(--font-d);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.1em;padding:6px 13px;border-radius:3px;cursor:pointer;border:1px solid transparent;transition:all .12s;display:inline-flex;align-items:center;gap:5px;}
+.btn-red   {background:rgba(196,18,48,.15);color:var(--red);border-color:rgba(196,18,48,.3);}  .btn-red:hover{background:var(--red);color:#fff;}
+.btn-green {background:rgba(34,197,94,.1);color:var(--green);border-color:rgba(34,197,94,.3);}  .btn-green:hover{background:var(--green);color:#000;}
+.btn-amber {background:rgba(245,158,11,.1);color:var(--amber);border-color:rgba(245,158,11,.3);} .btn-amber:hover{background:var(--amber);color:#000;}
+.btn-ghost {background:rgba(255,255,255,.04);color:#777;border-color:#1a1a2e;}                   .btn-ghost:hover{background:#1a1a2e;color:var(--text);}
+.btn-blue  {background:rgba(96,165,250,.1);color:var(--blue);border-color:rgba(96,165,250,.3);}  .btn-blue:hover{background:var(--blue);color:#000;}
+.btn-danger{background:rgba(239,68,68,.1);color:#ef4444;border-color:rgba(239,68,68,.3);}        .btn-danger:hover{background:#ef4444;color:#fff;}
+
+/* ── FORMS ───────────────────── */
+.form-row{display:grid;gap:12px;margin-bottom:14px;}
+.form-row-2{grid-template-columns:1fr 1fr;}
+.form-row-3{grid-template-columns:1fr 1fr 1fr;}
+.form-row-4{grid-template-columns:1fr 1fr 1fr auto;}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+.form-label{font-size:11px;color:#3a3a3a;text-transform:uppercase;letter-spacing:.1em;}
+.form-input,.form-select{background:#08080f;border:1px solid #1e1e28;color:var(--text);padding:9px 12px;font-size:13px;border-radius:3px;font-family:var(--font-b);width:100%;}
+.form-input:focus,.form-select:focus{outline:none;border-color:var(--red);}
+.form-select option{background:#0d0d18;}
+
+/* ── CHART BARS ──────────────── */
+.chart-row{display:flex;align-items:center;gap:10px;margin-bottom:7px;}
+.chart-lbl{font-size:11px;color:#444;width:90px;text-align:right;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.chart-track{flex:1;background:#0a0a12;border-radius:2px;height:14px;overflow:hidden;}
+.chart-fill{height:100%;border-radius:2px;transition:width .5s ease;}
+.chart-val{font-family:var(--font-d);font-weight:700;font-size:11px;color:#555;width:44px;text-align:right;}
+
+/* ── MODAL ───────────────────── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:none;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{background:#0d0d18;border:1px solid #1a1a2e;border-radius:8px;padding:32px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;position:relative;}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:#444;font-size:20px;cursor:pointer;line-height:1;}
+.modal-close:hover{color:var(--text);}
+.modal-title{font-family:var(--font-d);font-weight:900;font-size:18px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:22px;}
+.modal-actions{display:flex;gap:10px;margin-top:24px;justify-content:flex-end;}
+
+/* ── TOAST ───────────────────── */
+.toast{position:fixed;bottom:28px;right:28px;background:#0d0d18;border:1px solid #1a1a2e;color:var(--text);padding:12px 20px;border-radius:6px;font-size:13px;z-index:9999;transform:translateY(80px);opacity:0;transition:all .3s;max-width:340px;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.08);}
+.toast.error  {border-color:rgba(239,68,68,.4); background:rgba(239,68,68,.08);}
+
+/* ── SEARCH BAR ──────────────── */
+.search-bar{background:#08080f;border:1px solid #1e1e28;color:var(--text);padding:8px 14px;font-size:13px;border-radius:3px;font-family:var(--font-b);width:220px;}
+.search-bar:focus{outline:none;border-color:var(--red);}
+
+/* ── STATS ROW ───────────────── */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px;}
+.stat-box{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+.stat-num{font-family:var(--font-d);font-weight:900;font-size:26px;color:var(--text);}
+.stat-lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;}
+
+/* ── EMPTY STATE ─────────────── */
+.empty{padding:40px;text-align:center;color:#2a2a3a;font-size:13px;}
+
+/* ── CODE ────────────────────── */
+.code{font-family:monospace;font-size:12px;background:#050508;padding:3px 8px;border-radius:3px;color:var(--blue);letter-spacing:.04em;}
+
+/* ── DIVIDER ─────────────────── */
+.divider{border:none;border-top:1px solid #111;margin:20px 0;}
+
+/* ── CONFIRM DANGER ──────────── */
+.danger-zone{background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.15);border-radius:6px;padding:20px;}
+.danger-title{font-family:var(--font-d);font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#ef4444;margin-bottom:12px;}
+
+/* ── DRAWER ───────────────────── */
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:800;display:none;}
+.drawer-overlay.open{display:block;}
+.drawer{position:fixed;top:0;right:-600px;width:580px;height:100vh;background:#09090f;border-left:1px solid #1a1a2e;z-index:900;overflow-y:auto;transition:right .25s ease;display:flex;flex-direction:column;}
+.drawer.open{right:0;}
+.drawer-hd{padding:20px 24px;border-bottom:1px solid #111;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#09090f;z-index:10;}
+.drawer-title{font-family:var(--font-d);font-weight:900;font-size:18px;text-transform:uppercase;letter-spacing:.1em;}
+.drawer-body{padding:24px;flex:1;}
+.drawer-close{background:none;border:none;color:#444;font-size:22px;cursor:pointer;line-height:1;}
+.drawer-close:hover{color:var(--text);}
+
+/* ── VENDOR PROFILE ──────────── */
+.vp-header{display:flex;align-items:flex-start;gap:16px;margin-bottom:22px;}
+.vp-avatar{width:48px;height:48px;background:rgba(196,18,48,.15);border:1px solid rgba(196,18,48,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:900;font-size:20px;color:var(--red);flex-shrink:0;}
+.vp-meta{flex:1;}
+.vp-name{font-family:var(--font-d);font-weight:900;font-size:20px;text-transform:uppercase;}
+.vp-biz{font-size:13px;color:#555;margin-top:2px;}
+.vp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.vp-stat{background:#0d0d18;border:1px solid #1a1a2e;border-radius:4px;padding:12px 14px;}
+.vp-stat-val{font-family:var(--font-d);font-weight:900;font-size:22px;}
+.vp-stat-lbl{font-size:10px;color:#333;text-transform:uppercase;letter-spacing:.08em;margin-top:3px;}
+
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div style="display:flex;align-items:center;">
+    <div class="topbar-brand">GateReady™</div>
+    <div class="topbar-badge">Admin</div>
+  </div>
+  <div class="topbar-right">
+    <span style="font-size:11px;color:#1a3;display:flex;align-items:center;gap:5px;" id="liveIndicator"><span style="width:6px;height:6px;background:#22c55e;border-radius:50%;display:inline-block;animation:pulse 2s infinite;"></span> Live</span>
+    <span class="topbar-user" id="adminEmail">admin@begateready.com</span>
+    <a class="btn btn-ghost" href="/" target="_blank">↗ View Site</a>
+    <a class="btn btn-danger" href="/api/admin/logout">Sign Out</a>
+  </div>
+</div>
+
+<div class="layout">
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-section">Overview</div>
+  <div class="nav-item active" data-sec="overview" onclick="nav(this,'overview')"><span class="nav-icon">📊</span> Dashboard</div>
+  <div class="nav-item" data-sec="analytics" onclick="nav(this,'analytics')"><span class="nav-icon">📈</span> Analytics</div>
+
+  <div class="sidebar-section">Accounts</div>
+  <div class="nav-item" data-sec="vendors" onclick="nav(this,'vendors')"><span class="nav-icon">🏪</span> Vendors</div>
+  <div class="nav-item" data-sec="applications" onclick="nav(this,'applications')"><span class="nav-icon">📋</span> Applications <span class="nav-badge" id="pendingBadge">...</span></div>
+
+  <div class="sidebar-section">Commerce</div>
+  <div class="nav-item" data-sec="sales" onclick="nav(this,'sales')"><span class="nav-icon">💰</span> Sales Data</div>
+  <div class="nav-item" data-sec="orders" onclick="nav(this,'orders')"><span class="nav-icon">📦</span> Orders</div>
+  <div class="nav-item" data-sec="saas" onclick="nav(this,'saas')"><span class="nav-icon">💳</span> SaaS / Embed</div>
+
+  <div class="sidebar-section">Gate Check</div>
+  <div class="nav-item" data-sec="gclog" onclick="nav(this,'gclog')"><span class="nav-icon">🔍</span> Query Log</div>
+  <div class="nav-item" data-sec="emails" onclick="nav(this,'emails')"><span class="nav-icon">📧</span> Email Captures</div>
+
+  <div class="sidebar-section">System</div>
+  <div class="nav-item" data-sec="system" onclick="nav(this,'system')"><span class="nav-icon">⚙️</span> System</div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- DASHBOARD                                         -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section active" id="sec-overview">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+    <div>
+      <div style="font-family:var(--font-d);font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.08em;">Dashboard</div>
+      <div style="font-size:12px;color:#333;margin-top:3px;" id="lastUpdated">Loading...</div>
+    </div>
+    <button class="btn btn-ghost" onclick="loadAll()">↺ Refresh</button>
+  </div>
+
+  <div class="kpi-grid" id="kpiRow">
+    <div class="kpi"><div class="kpi-val">—</div><div class="kpi-label">Active Vendors</div></div>
+    <div class="kpi" style="--accent:var(--amber);"><div class="kpi-val">—</div><div class="kpi-label">Pending Applications</div></div>
+    <div class="kpi" style="--accent:var(--blue);"><div class="kpi-val">—</div><div class="kpi-label">Gate Checks (30d)</div></div>
+    <div class="kpi" style="--accent:var(--green);"><div class="kpi-val">—</div><div class="kpi-label">Revenue MTD</div></div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-hd"><div class="card-title">Gate Check Volume (14 Days)</div></div>
+      <div class="card-body" id="dailyChart"><div class="empty">Loading...</div></div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="card-title">Top Venues</div></div>
+      <div class="card-body" id="venueChart"><div class="empty">Loading...</div></div>
+    </div>
+  </div>
+
+  <div class="card-grid" style="margin-top:18px;">
+    <div class="card">
+      <div class="card-hd"><div class="card-title">Recent Orders</div><button class="btn btn-ghost" onclick="nav(document.querySelector('[data-sec=orders]'),'orders')">View All →</button></div>
+      <div class="tbl-wrap"><table><thead><tr><th>Vendor</th><th>Qty</th><th>Total</th><th>Status</th></tr></thead><tbody id="recentOrders"><tr><td colspan="4" class="empty">Loading...</td></tr></tbody></table></div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="card-title">Pending Applications</div><button class="btn btn-ghost" onclick="nav(document.querySelector('[data-sec=applications]'),'applications')">Review →</button></div>
+      <div class="tbl-wrap"><table><thead><tr><th>Business</th><th>Type</th><th>Action</th></tr></thead><tbody id="pendingAppsList"><tr><td colspan="3" class="empty">Loading...</td></tr></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- ANALYTICS                                         -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="sec-analytics">
+  <div style="margin-bottom:24px;"><div style="font-family:var(--font-d);font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.08em;">Analytics</div></div>
+
+  <div class="kpi-grid">
+    <div class="kpi" style="--accent:var(--blue);"><div class="kpi-val" id="an-gc30">—</div><div class="kpi-label">Gate Checks (30d)</div><div class="kpi-delta up" id="an-gc7">Loading...</div></div>
+    <div class="kpi" style="--accent:var(--purple);"><div class="kpi-val" id="an-llm">—</div><div class="kpi-label">LLM Calls (30d)</div><div class="kpi-delta" id="an-cost">cost: —</div></div>
+    <div class="kpi" style="--accent:var(--green);"><div class="kpi-val" id="an-hit">—</div><div class="kpi-label">DB Hit Rate</div><div class="kpi-delta up">Free tier lookups</div></div>
+    <div class="kpi" style="--accent:var(--amber);"><div class="kpi-val" id="an-email">—</div><div class="kpi-label">Email Captures</div><div class="kpi-delta">Fan leads collected</div></div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-hd"><div class="card-title">Daily Gate Check Volume</div></div>
+      <div class="card-body" id="an-dailyChart"></div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="card-title">Top Venues (30d)</div></div>
+      <div class="card-body" id="an-venueChart"></div>
+    </div>
+  </div>
+
+  <div class="card-grid" style="margin-top:18px;">
+    <div class="card">
+      <div class="card-hd"><div class="card-title">Revenue by Channel</div></div>
+      <div class="card-body" id="an-revChart"></div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="card-title">AI Cost Breakdown</div></div>
+      <div class="card-body">
+        <div class="chart-row" style="margin-bottom:18px;">
+          <div class="chart-lbl">DB Hits</div>
+          <div class="chart-track"><div class="chart-fill" style="width:94%;background:var(--green);"></div></div>
+          <div class="chart-val" id="an-db-pct">—%</div>
+        </div>
+        <div class="chart-row" style="margin-bottom:18px;">
+          <div class="chart-lbl">LLM Calls</div>
+          <div class="chart-track"><div class="chart-fill" style="width:6%;background:var(--purple);"></div></div>
+          <div class="chart-val" id="an-llm-pct">—%</div>
+        </div>
+        <hr class="divider">
+        <div style="font-size:13px;color:#444;line-height:1.8;">
+          <div>Cost per LLM call: <span style="color:var(--purple);">~$0.0003</span></div>
+          <div>Est. monthly LLM cost: <span style="color:var(--text);" id="an-monthly-cost">—</span></div>
+          <div>SaaS MRR: <span style="color:var(--green);" id="an-saas-mrr">—</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- VENDORS                                           -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="sec-vendors">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+    <div style="font-family:var(--font-d);font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.08em;">Vendors</div>
+    <div style="display:flex;gap:10px;">
+      <input class="search-bar" placeholder="Search vendors..." id="vendorSearch" oninput="filterVendors()">
+      <button class="btn btn-red" onclick="openModal('modalCreateVendor')">+ Create Account</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Business</th><th>Contact</th><th>Email</th><th>Tier</th><th>Embed</th><th>Status</th><th>Last Login</th><th>Actions</th></tr></thead>
+        <tbody id="vendorTable"><tr><td colspan="8" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- APPLICATIONS                                      -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="sec-applications">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+    <div style="font-family:var(--font-d);font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.08em;">Applications</div>
+    <div style="display:flex;gap:10px;">
+      <select class="form-select" style="width:140px;" id="appStatusFilter" onchange="loadApplications()">
+        <option value="">All</option>
+        <option value="pending">Pending</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="bulkAppBar" style="display:none;align-items:center;gap:10px;margin-bottom:14px;padding:12px 16px;background:rgba(196,18,48,.06);border:1px solid rgba(196,18,48,.2);border-radius:6px;">
+    <span style="font-size:12px;color:#666;">Bulk actions:</span>
+    <button class="btn btn-green" onclick="bulkAppAction('approved')">✓ Approve Selected</button>
+    <button class="btn btn-danger" onclick="bulkAppAction('rejected')">✗ Reject Selected</button>
+  </div>
+
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th></th><th>Date</th><th>Business</th><th>Contact</th><th>Email</th><th>City</th><th>Type</th><th>Qty</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="appTable"><tr><td colspan="10" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- ORDERS                                            -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="sec-orders">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+    <div style="font-family:var(--font-d);font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.08em;">Orders</div>
+    <div style="display:flex;gap:10px;">
+      <input class="search-bar" placeholder="Search orders..." id="orderSearch" oninput="filterOrders()">
+      <button class="btn btn-red" onclick="openModal('modalCreateOrder')">+ New Order</button>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="stat-num" id="ord-total">—</div><div class="stat-lbl">Total Revenue</div></div>
+    <div class="stat-box"><div class="stat-num" id="ord-count">—</div><div class="stat-lbl">Total Orders</div></div>
+    <div class="stat-box"><div class="stat-num" id="ord-pending">—</div><div class="stat-lbl">Pending</div></div>
+  </div>
+
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Invoice</th><th>Vendor</th><th>Qty</th><th>Per</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="orderTable"><tr><td colspan="8" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- SAAS / EMBED                                      -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="sec-saas">
+  <div style="margin-bottom:24px;"><div style="font-family:var(--font-d);font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.08em;">SaaS / Embed Subscriptions</div></div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Vendor</th><th>Plan</th><th>Locations</th><th>API Key</th><th>Status</th><th>Started</th></tr></thead>
+        <tbody id="saasTable"><tr><td colspan="6" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- GATE CHECK LOG                                    -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="sec-gclog">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+    <div style="font-family:var(--font-d);font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.08em;">Gate Check Query Log</div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <span style="font-size:12px;color:#333;" id="gcLogTotal">—</span>
+      <button class="btn btn-ghost" onclick="loadGCLog(1)">↺ Refresh</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Time</th><th>Query</th><th>Venue</th><th>Hit</th><th>LLM</th><th>Email</th></tr></thead>
+        <tbody id="gcLogTable"><tr><td colspan="6" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+    <div style="padding:14px 18px;border-top:1px solid #111;display:flex;gap:10px;align-items:center;" id="gcPagination"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- EMAIL CAPTURES                                    -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="sec-emails">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+    <div style="font-family:var(--font-d);font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.08em;">Email Captures</div>
+    <button class="btn btn-blue" onclick="exportEmails()">↓ Export CSV</button>
+  </div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Time</th><th>Email</th><th>Query</th></tr></thead>
+        <tbody id="emailTable"><tr><td colspan="3" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- SALES DATA                                        -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="sec-sales">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;">
+    <div style="font-family:var(--font-d);font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.08em;">Sales Data</div>
+    <div style="display:flex;gap:10px;">
+      <a class="btn btn-ghost" href="/api/admin/export/orders-csv">↓ Orders CSV</a>
+      <a class="btn btn-ghost" href="/api/admin/export/vendors-csv">↓ Vendors CSV</a>
+    </div>
+  </div>
+
+  <div class="kpi-grid" id="sales-kpis">
+    <div class="kpi" style="--accent:var(--green);"><div class="kpi-val" id="sl-total-rev">—</div><div class="kpi-label">Total Revenue</div></div>
+    <div class="kpi" style="--accent:var(--blue);"><div class="kpi-val" id="sl-total-bags">—</div><div class="kpi-label">Total Bags Sold</div></div>
+    <div class="kpi" style="--accent:var(--amber);"><div class="kpi-val" id="sl-avg-order">—</div><div class="kpi-label">Avg Order Value</div></div>
+    <div class="kpi" style="--accent:var(--purple);"><div class="kpi-val" id="sl-saas-mrr">—</div><div class="kpi-label">SaaS MRR</div></div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-hd"><div class="card-title">Monthly Revenue (6 Months)</div></div>
+      <div class="card-body" id="sl-monthly-chart"><div class="empty">Loading...</div></div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="card-title">Revenue by Channel</div></div>
+      <div class="card-body" id="sl-channel-chart"><div class="empty">Loading...</div></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;">
+    <div class="card-hd">
+      <div class="card-title">Revenue by Vendor</div>
+      <input class="search-bar" placeholder="Search vendors..." id="salesVendorSearch" oninput="filterSalesVendors()">
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Business / Email</th><th>Orders</th><th>Bags Sold</th><th>Revenue</th><th>Last Order</th><th>Action</th></tr></thead>
+        <tbody id="salesVendorTable"><tr><td colspan="6" class="empty">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- SYSTEM                                            -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="section" id="sec-system">
+  <div style="margin-bottom:24px;"><div style="font-family:var(--font-d);font-weight:900;font-size:26px;text-transform:uppercase;letter-spacing:.08em;">System</div></div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-hd"><div class="card-title">System Stats</div><button class="btn btn-ghost" onclick="loadSystem()">↺ Refresh</button></div>
+      <div class="card-body">
+        <div id="sysStats" class="empty">Loading...</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><div class="card-title">Quick Actions</div></div>
+      <div class="card-body" style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div><div style="font-size:13px;color:var(--text);">Admin Password</div><div style="font-size:11px;color:#333;margin-top:2px;">Change admin login password</div></div>
+          <button class="btn btn-ghost" onclick="openModal('modalAdminPass')">Change</button>
+        </div>
+        <hr class="divider" style="margin:4px 0;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div><div style="font-size:13px;color:var(--text);">Export All Data</div><div style="font-size:11px;color:#333;margin-top:2px;">JSON dump of all vendors + orders</div></div>
+          <button class="btn btn-ghost" onclick="exportAll()">Export</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;">
+    <div class="card-hd"><div class="card-title">Danger Zone</div></div>
+    <div class="card-body">
+      <div class="danger-zone">
+        <div class="danger-title">⚠ Destructive Actions</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+          <div>
+            <div style="font-size:13px;color:#999;margin-bottom:8px;">Clear all Gate Check query logs and email captures. Cannot be undone.</div>
+            <button class="btn btn-danger" onclick="confirmAction('reset-analytics','Clear Analytics Data?')">Clear Analytics Data</button>
+          </div>
+          <div>
+            <div style="font-size:13px;color:#999;margin-bottom:8px;">Remove all order records. Vendor accounts are not affected.</div>
+            <button class="btn btn-danger" onclick="confirmAction('reset-orders','Clear All Orders?')">Clear All Orders</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main><!-- /main -->
+</div><!-- /layout -->
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- MODALS                                            -->
+<!-- ══════════════════════════════════════════════════ -->
+
+<!-- Create Vendor -->
+<div class="modal-overlay" id="modalCreateVendor">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modalCreateVendor')">✕</button>
+    <div class="modal-title">Create Vendor Account</div>
+    <div class="form-row form-row-2">
+      <div class="form-group"><label class="form-label">Name*</label><input class="form-input" id="cv-name" placeholder="Contact name"></div>
+      <div class="form-group"><label class="form-label">Business*</label><input class="form-input" id="cv-business" placeholder="Business name"></div>
+    </div>
+    <div class="form-row form-row-2">
+      <div class="form-group"><label class="form-label">Email*</label><input class="form-input" id="cv-email" type="email" placeholder="vendor@business.com"></div>
+      <div class="form-group"><label class="form-label">Password (leave blank = auto)</label><input class="form-input" id="cv-password" placeholder="Auto-generated if blank"></div>
+    </div>
+    <div class="form-row form-row-2">
+      <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="cv-phone" placeholder="404-555-0000"></div>
+      <div class="form-group"><label class="form-label">City</label><input class="form-input" id="cv-city" placeholder="Atlanta, GA"></div>
+    </div>
+    <div class="form-row form-row-2">
+      <div class="form-group"><label class="form-label">Type</label>
+        <select class="form-select" id="cv-type">
+          <option>Concession Stand</option><option>Stadium Vendor</option><option>Sports Bar</option>
+          <option>Gas Station</option><option>Gift Shop</option><option>Team Store</option>
+          <option>Event Vendor</option><option>Online Retailer</option><option>Other</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Wholesale Tier (qty)</label>
+        <select class="form-select" id="cv-tier">
+          <option value="10">Starter (10)</option><option value="50" selected>Most Popular (50)</option>
+          <option value="100">Standard (100)</option><option value="250">High Volume (250)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Approved immediately?</label>
+      <select class="form-select" id="cv-approved"><option value="true">Yes — active right away</option><option value="false">No — pending</option></select>
+    </div>
+    <div class="form-group" style="margin-top:10px;"><label class="form-label">Notes</label><input class="form-input" id="cv-notes" placeholder="Optional internal notes"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('modalCreateVendor')">Cancel</button>
+      <button class="btn btn-red" onclick="createVendor()">Create Account →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Vendor -->
+<div class="modal-overlay" id="modalEditVendor">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modalEditVendor')">✕</button>
+    <div class="modal-title">Edit Vendor</div>
+    <input type="hidden" id="ev-email-orig">
+    <div class="form-row form-row-2">
+      <div class="form-group"><label class="form-label">Name</label><input class="form-input" id="ev-name"></div>
+      <div class="form-group"><label class="form-label">Business</label><input class="form-input" id="ev-business"></div>
+    </div>
+    <div class="form-row form-row-2">
+      <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="ev-phone"></div>
+      <div class="form-group"><label class="form-label">City</label><input class="form-input" id="ev-city"></div>
+    </div>
+    <div class="form-row form-row-2">
+      <div class="form-group"><label class="form-label">Type</label>
+        <select class="form-select" id="ev-type">
+          <option>Concession Stand</option><option>Stadium Vendor</option><option>Sports Bar</option>
+          <option>Gas Station</option><option>Gift Shop</option><option>Team Store</option>
+          <option>Event Vendor</option><option>Online Retailer</option><option>Other</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Tier</label>
+        <select class="form-select" id="ev-tier">
+          <option value="10">10</option><option value="50">50</option><option value="100">100</option><option value="250">250</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row form-row-2">
+      <div class="form-group"><label class="form-label">Approved</label>
+        <select class="form-select" id="ev-approved"><option value="true">Yes</option><option value="false">No</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Active</label>
+        <select class="form-select" id="ev-active"><option value="true">Yes</option><option value="false">Suspended</option></select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:10px;"><label class="form-label">Notes</label><input class="form-input" id="ev-notes"></div>
+    <hr class="divider">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+      <button class="btn btn-amber" onclick="resetPassword()">↺ Reset Password</button>
+      <button class="btn btn-blue" onclick="genEmbedKey()">🔑 Gen Embed Key</button>
+      <button class="btn btn-danger" onclick="deleteVendor()">🗑 Delete Account</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('modalEditVendor')">Cancel</button>
+      <button class="btn btn-red" onclick="saveVendor()">Save Changes →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Create Order -->
+<div class="modal-overlay" id="modalCreateOrder">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modalCreateOrder')">✕</button>
+    <div class="modal-title">Create Order</div>
+    <div class="form-group"><label class="form-label">Vendor Email</label><input class="form-input" id="co-email" placeholder="vendor@business.com" type="email"></div>
+    <div class="form-row form-row-2" style="margin-top:12px;">
+      <div class="form-group"><label class="form-label">Quantity (bags)</label>
+        <select class="form-select" id="co-qty" onchange="updateOrderTotal()">
+          <option value="10" data-per="16">10 bags — $16/bag</option>
+          <option value="50" data-per="13" selected>50 bags — $13/bag</option>
+          <option value="100" data-per="11">100 bags — $11/bag</option>
+          <option value="250" data-per="10">250 bags — $10/bag</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">Status</label>
+        <select class="form-select" id="co-status"><option value="pending">Pending</option><option value="completed">Completed</option></select>
+      </div>
+    </div>
+    <div style="margin-top:12px;padding:12px 14px;background:#08080f;border-radius:4px;font-size:13px;color:#555;">
+      Order total: <span style="color:var(--text);font-family:var(--font-d);font-weight:700;font-size:16px;" id="co-total">$650</span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('modalCreateOrder')">Cancel</button>
+      <button class="btn btn-red" onclick="createOrder()">Create Order →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Password -->
+<div class="modal-overlay" id="modalAdminPass">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modalAdminPass')">✕</button>
+    <div class="modal-title">Change Admin Password</div>
+    <div class="form-group"><label class="form-label">New Password</label><input class="form-input" id="ap-pass" type="password" placeholder="Min 8 chars"></div>
+    <div class="form-group" style="margin-top:10px;"><label class="form-label">Confirm</label><input class="form-input" id="ap-confirm" type="password"></div>
+    <p style="font-size:12px;color:#444;margin-top:12px;">Note: In this demo, password changes take effect for this session only. In production, set ADMIN_PASSWORD env var.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('modalAdminPass')">Cancel</button>
+      <button class="btn btn-red" onclick="toast('Password changes require server restart in production.','error')">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Vendor Detail Drawer -->
+<div class="drawer-overlay" id="vendorDrawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="vendorDrawer">
+  <div class="drawer-hd">
+    <div class="drawer-title" id="dwr-title">Vendor Profile</div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body" id="dwr-body">
+    <div class="empty">Loading...</div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+const API = '/api/admin';
+let _vendors = [], _orders = [], _gcPage = 1;
+
+// ── NAV ────────────────────────────────────────────────────────
+function nav(el, sec) {
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('sec-'+sec).classList.add('active');
+  switch(sec){
+    case 'overview':    loadAll(); break;
+    case 'analytics':   loadAnalytics(); break;
+    case 'vendors':     loadVendors(); break;
+    case 'applications':loadApplications(); break;
+    case 'sales':       loadSales(); break;
+    case 'orders':      loadOrders(); break;
+    case 'saas':        loadSaas(); break;
+    case 'gclog':       loadGCLog(1); break;
+    case 'emails':      loadEmails(); break;
+    case 'system':      loadSystem(); break;
+  }
+}
+
+// ── MODALS ─────────────────────────────────────────────────────
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
+
+// ── TOAST ──────────────────────────────────────────────────────
+function toast(msg,type='success'){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast '+type+' show';
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ── DATE HELPER ────────────────────────────────────────────────
+function fmtDate(ts){if(!ts)return'—';const d=new Date(ts);return d.toLocaleDateString('en',{month:'short',day:'numeric',year:'2-digit',hour:'2-digit',minute:'2-digit'});}
+function fmtDay(ts){if(!ts)return'—';const d=new Date(ts);return d.toLocaleDateString('en',{month:'short',day:'numeric'});}
+function elapsed(ts){if(!ts)return'Never';const s=Math.floor((Date.now()-ts)/1000);if(s<60)return s+'s ago';if(s<3600)return Math.floor(s/60)+'m ago';if(s<86400)return Math.floor(s/3600)+'h ago';return Math.floor(s/86400)+'d ago';}
+
+// ── API HELPER ─────────────────────────────────────────────────
+async function api(path,opts={}){
+  const r=await fetch(API+path,{headers:{'Content-Type':'application/json'},...opts});
+  return r.json();
+}
+
+// ══════════════════════════════════════════════════════════════
+// LOAD ALL (Dashboard)
+// ══════════════════════════════════════════════════════════════
+async function loadAll(){
+  document.getElementById('lastUpdated').textContent='Updated '+new Date().toLocaleTimeString();
+  const [anData,ordData,appData]=await Promise.all([
+    api('/analytics'),api('/orders'),api('/applications')
+  ]);
+  // KPIs
+  const kpi=document.getElementById('kpiRow');
+  kpi.innerHTML=`
+    <div class="kpi"><div class="kpi-val">${anData.activeVendors}</div><div class="kpi-label">Active Vendors</div><div class="kpi-delta up">↑ approved accounts</div></div>
+    <div class="kpi" style="--accent:var(--amber);"><div class="kpi-val">${anData.pendingApps}</div><div class="kpi-label">Pending Applications</div><div class="kpi-delta warn">${anData.pendingApps>0?'⚠ Needs review':'✓ All reviewed'}</div></div>
+    <div class="kpi" style="--accent:var(--blue);"><div class="kpi-val">${anData.gcTotal30d.toLocaleString()}</div><div class="kpi-label">Gate Checks (30d)</div><div class="kpi-delta up">7d: ${anData.gcTotal7d}</div></div>
+    <div class="kpi" style="--accent:var(--green);"><div class="kpi-val">$${anData.monthRevenue.toLocaleString()}</div><div class="kpi-label">Revenue MTD</div><div class="kpi-delta up">SaaS MRR: $${anData.saasMonthly}</div></div>`;
+
+  // Daily chart
+  renderBarChart('dailyChart',anData.dailyGC,'label','count','var(--red)','var(--red)',true);
+  renderBarChart('venueChart',anData.topVenues,'venue','count','var(--blue)','var(--blue)',false);
+
+  // Recent orders (top 5)
+  const ro=document.getElementById('recentOrders');
+  ro.innerHTML=ordData.orders.slice(0,5).map(o=>`
+    <tr><td><strong>${o.business||o.email}</strong></td><td>${o.qty} bags</td><td>$${o.total.toLocaleString()}</td>
+    <td><span class="pill ${o.status==='completed'?'pill-green':'pill-amber'}">${o.status}</span></td></tr>`).join('');
+
+  // Pending apps
+  const pa=document.getElementById('pendingAppsList');
+  const pending=appData.applications.filter(a=>a.status==='pending').slice(0,5);
+  pa.innerHTML=pending.length?pending.map(a=>`
+    <tr><td><strong>${a.business}</strong></td><td>${a.type}</td>
+    <td><button class="btn btn-green" onclick="quickApprove('${a.id}')">Approve</button></td></tr>`).join('')
+    :'<tr><td colspan="3" class="empty">No pending applications</td></tr>';
+
+  // Pending badge
+  document.getElementById('pendingBadge').textContent=anData.pendingApps||'0';
+}
+
+// ══════════════════════════════════════════════════════════════
+// ANALYTICS
+// ══════════════════════════════════════════════════════════════
+async function loadAnalytics(){
+  const d=await api('/analytics');
+  document.getElementById('an-gc30').textContent=d.gcTotal30d.toLocaleString();
+  document.getElementById('an-gc7').textContent=`7d: ${d.gcTotal7d} queries`;
+  document.getElementById('an-llm').textContent=d.llmCalls;
+  document.getElementById('an-cost').textContent=`$${d.llmCost} cost`;
+  document.getElementById('an-hit').textContent=d.hitRate+'%';
+  document.getElementById('an-email').textContent=d.emailCaptureTotal;
+  const dbPct=d.hitRate;
+  const llmPct=(100-parseFloat(d.hitRate)).toFixed(1);
+  document.getElementById('an-db-pct').textContent=dbPct+'%';
+  document.getElementById('an-llm-pct').textContent=llmPct+'%';
+  document.getElementById('an-monthly-cost').textContent='~$'+(d.llmCalls*0.0003*30/30*30).toFixed(3);
+  document.getElementById('an-saas-mrr').textContent='$'+d.saasMonthly+'/mo';
+  renderBarChart('an-dailyChart',d.dailyGC,'label','count','var(--red)','var(--red)',true);
+  renderBarChart('an-venueChart',d.topVenues,'venue','count','var(--blue)','var(--blue)',false);
+  const revData=[{label:'Bag Orders',count:d.totalRevenue,color:'var(--red)'},{label:'SaaS MRR',count:d.saasMonthly,color:'var(--green)'}];
+  renderBarChart('an-revChart',revData,'label','count','',null,false,true);
+}
+
+// ══════════════════════════════════════════════════════════════
+// VENDORS
+// ══════════════════════════════════════════════════════════════
+async function loadVendors(){
+  const d=await api('/vendors');
+  _vendors=d.vendors;
+  renderVendors(_vendors);
+}
+
+function renderVendors(list){
+  document.getElementById('vendorTable').innerHTML=list.length?list.map(v=>`
+    <tr>
+      <td><strong>${v.business}</strong><br><span style="font-size:11px;color:#333;">${v.type||''}</span></td>
+      <td>${v.name}</td>
+      <td style="font-size:12px;">${v.email}</td>
+      <td><span class="code">${v.tier} bags</span></td>
+      <td>${v.embed_key?`<span class="code" title="${v.embed_key}">${v.embed_key.slice(0,14)}…</span>`:'<span style="color:#222;">—</span>'}</td>
+      <td>
+        ${v.approved?'<span class="pill pill-green">Active</span>':'<span class="pill pill-amber">Pending</span>'}
+        ${!v.active?'<span class="pill pill-red" style="margin-left:4px;">Suspended</span>':''}
+      </td>
+      <td style="font-size:12px;">${elapsed(v.last_login)}</td>
+      <td><button class="btn btn-ghost" onclick="viewVendorDetail('${v.email}')">View</button> <button class="btn btn-ghost" onclick="editVendor('${v.email}')">Edit</button></td>
+    </tr>`).join(''):'<tr><td colspan="8" class="empty">No vendors yet</td></tr>';
+}
+
+function filterVendors(){
+  const q=document.getElementById('vendorSearch').value.toLowerCase();
+  renderVendors(_vendors.filter(v=>(v.business+v.name+v.email).toLowerCase().includes(q)));
+}
+
+function editVendor(email){
+  const v=_vendors.find(x=>x.email===email);
+  if(!v)return;
+  document.getElementById('ev-email-orig').value=v.email;
+  document.getElementById('ev-name').value=v.name||'';
+  document.getElementById('ev-business').value=v.business||'';
+  document.getElementById('ev-phone').value=v.phone||'';
+  document.getElementById('ev-city').value=v.city||'';
+  document.getElementById('ev-type').value=v.type||'Other';
+  document.getElementById('ev-tier').value=v.tier||50;
+  document.getElementById('ev-approved').value=String(v.approved);
+  document.getElementById('ev-active').value=String(v.active!==false);
+  document.getElementById('ev-notes').value=v.notes||'';
+  openModal('modalEditVendor');
+}
+
+async function createVendor(){
+  const body={
+    name:document.getElementById('cv-name').value,
+    business:document.getElementById('cv-business').value,
+    email:document.getElementById('cv-email').value,
+    password:document.getElementById('cv-password').value,
+    phone:document.getElementById('cv-phone').value,
+    city:document.getElementById('cv-city').value,
+    type:document.getElementById('cv-type').value,
+    tier:document.getElementById('cv-tier').value,
+    approved:document.getElementById('cv-approved').value,
+    notes:document.getElementById('cv-notes').value,
+  };
+  const d=await api('/vendors',{method:'POST',body:JSON.stringify(body)});
+  if(d.success){
+    closeModal('modalCreateVendor');
+    toast(`Account created!${d.temp_password?' Temp password: '+d.temp_password:''}`, 'success');
+    loadVendors();
+  } else toast(d.error||'Error creating account','error');
+}
+
+async function saveVendor(){
+  const email=document.getElementById('ev-email-orig').value;
+  const body={
+    name:document.getElementById('ev-name').value,
+    business:document.getElementById('ev-business').value,
+    phone:document.getElementById('ev-phone').value,
+    city:document.getElementById('ev-city').value,
+    type:document.getElementById('ev-type').value,
+    tier:document.getElementById('ev-tier').value,
+    approved:document.getElementById('ev-approved').value,
+    active:document.getElementById('ev-active').value,
+    notes:document.getElementById('ev-notes').value,
+  };
+  const d=await api('/vendors/'+encodeURIComponent(email),{method:'PATCH',body:JSON.stringify(body)});
+  if(d.success){closeModal('modalEditVendor');toast('Vendor updated!');loadVendors();}
+  else toast(d.error||'Error','error');
+}
+
+async function resetPassword(){
+  const email=document.getElementById('ev-email-orig').value;
+  if(!confirm(`Reset password for ${email}? A new random password will be generated.`))return;
+  const d=await api('/vendors/'+encodeURIComponent(email)+'/reset-password',{method:'POST',body:JSON.stringify({})});
+  if(d.success){toast(`New password: ${d.new_password}`,'success');closeModal('modalEditVendor');}
+  else toast(d.error||'Error','error');
+}
+
+async function genEmbedKey(){
+  const email=document.getElementById('ev-email-orig').value;
+  const d=await api('/vendors/'+encodeURIComponent(email)+'/gen-key',{method:'POST',body:'{}',});
+  if(d.success){toast('Embed key: '+d.embed_key,'success');closeModal('modalEditVendor');loadVendors();}
+  else toast(d.error||'Error','error');
+}
+
+async function deleteVendor(){
+  const email=document.getElementById('ev-email-orig').value;
+  if(!confirm(`DELETE vendor account for ${email}?\n\nThis cannot be undone.`))return;
+  const d=await api('/vendors/'+encodeURIComponent(email),{method:'DELETE'});
+  if(d.success){closeModal('modalEditVendor');toast('Account deleted','success');loadVendors();}
+  else toast(d.error||'Error','error');
+}
+
+// ══════════════════════════════════════════════════════════════
+// APPLICATIONS
+// ══════════════════════════════════════════════════════════════
+async function loadApplications(){
+  const filter=document.getElementById('appStatusFilter').value;
+  const d=await api('/applications');
+  const apps=filter?d.applications.filter(a=>a.status===filter):d.applications;
+  const pending=d.applications.filter(a=>a.status==='pending').length;
+  document.getElementById('pendingBadge').textContent=pending||'0';
+  document.getElementById('appTable').innerHTML=apps.length?apps.map(a=>`
+    <tr>
+      <td style="font-size:12px;">${fmtDay(a.ts)}</td>
+      <td><strong>${a.business}</strong></td>
+      <td>${a.name}</td>
+      <td style="font-size:12px;">${a.email}</td>
+      <td style="font-size:12px;">${a.city}</td>
+      <td>${a.type}</td>
+      <td>${a.qty}</td>
+      <td><span class="pill ${a.status==='approved'?'pill-green':a.status==='rejected'?'pill-red':'pill-amber'}">${a.status}</span></td>
+      <td style="white-space:nowrap;">
+        ${a.status==='pending'?`<button class="btn btn-green" onclick="appAction('${a.id}','approved')">Approve</button> <button class="btn btn-danger" onclick="appAction('${a.id}','rejected')">Reject</button>`:'<button class="btn btn-ghost" onclick="viewApp(\''+a.id+'\')">View</button>'}
+        <button class="btn btn-danger" style="margin-left:4px;" onclick="deleteApp('${a.id}')">🗑</button>
+      </td>
+    </tr>`).join(''):'<tr><td colspan="9" class="empty">No applications</td></tr>';
+}
+
+async function appAction(id,status){
+  const d=await api('/applications/'+id,{method:'PATCH',body:JSON.stringify({status})});
+  if(d.success){
+    if(status==='approved'&&d.vendor_created)toast(`Approved! Temp password: ${d.temp_password}`,'success');
+    else toast(status==='approved'?'Application approved!':'Application rejected');
+    loadApplications();
+    loadAll();
+  } else toast(d.error||'Error','error');
+}
+
+async function quickApprove(id){await appAction(id,'approved');}
+
+async function deleteApp(id){
+  if(!confirm('Delete this application?'))return;
+  const d=await api('/applications/'+id,{method:'DELETE'});
+  if(d.success){toast('Deleted');loadApplications();}
+  else toast(d.error||'Error','error');
+}
+
+// ══════════════════════════════════════════════════════════════
+// ORDERS
+// ══════════════════════════════════════════════════════════════
+async function loadOrders(){
+  const d=await api('/orders');
+  _orders=d.orders;
+  const total=_orders.filter(o=>o.status==='completed').reduce((s,o)=>s+o.total,0);
+  document.getElementById('ord-total').textContent='$'+total.toLocaleString();
+  document.getElementById('ord-count').textContent=_orders.length;
+  document.getElementById('ord-pending').textContent=_orders.filter(o=>o.status==='pending').length;
+  renderOrders(_orders);
+}
+
+function renderOrders(list){
+  document.getElementById('orderTable').innerHTML=list.length?list.map(o=>`
+    <tr>
+      <td style="font-size:12px;">${fmtDay(o.ts)}</td>
+      <td><span class="code">${o.invoice}</span></td>
+      <td><strong>${o.business||o.email}</strong></td>
+      <td>${o.qty}</td>
+      <td>$${o.per}/bag</td>
+      <td style="color:var(--green);">$${o.total.toLocaleString()}</td>
+      <td>
+        <select class="form-select" style="width:120px;padding:4px 8px;" onchange="updateOrderStatus('${o.id}',this.value)">
+          <option value="pending" ${o.status==='pending'?'selected':''}>Pending</option>
+          <option value="completed" ${o.status==='completed'?'selected':''}>Completed</option>
+          <option value="cancelled" ${o.status==='cancelled'?'selected':''}>Cancelled</option>
+        </select>
+      </td>
+      <td><button class="btn btn-danger" onclick="deleteOrder('${o.id}')">🗑</button></td>
+    </tr>`).join(''):'<tr><td colspan="8" class="empty">No orders yet</td></tr>';
+}
+
+function filterOrders(){
+  const q=document.getElementById('orderSearch').value.toLowerCase();
+  renderOrders(_orders.filter(o=>(o.business+o.email+o.invoice).toLowerCase().includes(q)));
+}
+
+async function updateOrderStatus(id,status){
+  const d=await api('/orders/'+id,{method:'PATCH',body:JSON.stringify({status})});
+  if(!d.success)toast(d.error||'Error','error');
+  else toast('Order updated');
+}
+
+async function deleteOrder(id){
+  if(!confirm('Delete this order record?'))return;
+  const d=await api('/orders/'+id,{method:'DELETE'});
+  if(d.success){toast('Order deleted');loadOrders();}
+  else toast(d.error||'Error','error');
+}
+
+function updateOrderTotal(){
+  const sel=document.getElementById('co-qty');
+  const per=parseInt(sel.options[sel.selectedIndex].dataset.per);
+  const qty=parseInt(sel.value);
+  document.getElementById('co-total').textContent='$'+(qty*per).toLocaleString();
+}
+
+async function createOrder(){
+  const sel=document.getElementById('co-qty');
+  const per=parseInt(sel.options[sel.selectedIndex].dataset.per);
+  const body={email:document.getElementById('co-email').value,qty:sel.value,per,status:document.getElementById('co-status').value};
+  const d=await api('/orders',{method:'POST',body:JSON.stringify(body)});
+  if(d.success){closeModal('modalCreateOrder');toast('Order created!');loadOrders();}
+  else toast(d.error||'Error','error');
+}
+
+// ══════════════════════════════════════════════════════════════
+// SAAS
+// ══════════════════════════════════════════════════════════════
+async function loadSaas(){
+  const d=await api('/subs');
+  document.getElementById('saasTable').innerHTML=d.subs.length?d.subs.map(s=>`
+    <tr>
+      <td><strong>${s.vendor_email}</strong></td>
+      <td><span class="pill pill-green">$${s.plan}/mo</span></td>
+      <td>${s.locations}</td>
+      <td><span class="code">${s.key}</span></td>
+      <td><span class="pill ${s.status==='active'?'pill-green':'pill-gray'}">${s.status}</span></td>
+      <td style="font-size:12px;">${fmtDay(s.started)}</td>
+    </tr>`).join(''):'<tr><td colspan="6" class="empty">No subscriptions</td></tr>';
+}
+
+// ══════════════════════════════════════════════════════════════
+// GATE CHECK LOG
+// ══════════════════════════════════════════════════════════════
+async function loadGCLog(page=1){
+  _gcPage=page;
+  const d=await api('/gc-log?page='+page+'&limit=50');
+  document.getElementById('gcLogTotal').textContent=d.total.toLocaleString()+' total queries';
+  document.getElementById('gcLogTable').innerHTML=d.log.length?d.log.map(q=>`
+    <tr>
+      <td style="font-size:11px;color:#333;">${fmtDate(q.ts)}</td>
+      <td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${q.query}</td>
+      <td style="font-size:12px;">${q.venue||'—'}</td>
+      <td>${q.hit?'<span class="pill pill-green">Hit</span>':'<span class="pill pill-red">Miss</span>'}</td>
+      <td>${q.llm?'<span class="pill pill-purple">LLM</span>':'<span class="pill pill-gray">DB</span>'}</td>
+      <td style="font-size:11px;">${q.email||'—'}</td>
+    </tr>`).join(''):'<tr><td colspan="6" class="empty">No queries</td></tr>';
+  // Pagination
+  const pgEl=document.getElementById('gcPagination');
+  pgEl.innerHTML='';
+  for(let i=1;i<=Math.min(d.pages,10);i++){
+    const b=document.createElement('button');
+    b.className='btn '+(i===page?'btn-red':'btn-ghost');
+    b.textContent=i;b.onclick=()=>loadGCLog(i);
+    pgEl.appendChild(b);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// EMAILS
+// ══════════════════════════════════════════════════════════════
+async function loadEmails(){
+  const d=await api('/emails');
+  document.getElementById('emailTable').innerHTML=d.emails.length?d.emails.map(e=>`
+    <tr>
+      <td style="font-size:11px;color:#333;">${fmtDate(e.ts)}</td>
+      <td><strong>${e.email}</strong></td>
+      <td style="font-size:12px;">${e.query}</td>
+    </tr>`).join(''):'<tr><td colspan="3" class="empty">No email captures yet</td></tr>';
+}
+
+function exportEmails(){
+  api('/emails').then(d=>{
+    const rows=['Timestamp,Email,Query',...d.emails.map(e=>`"${new Date(e.ts).toISOString()}","${e.email}","${e.query}"`)];
+    const blob=new Blob([rows.join('\n')],{type:'text/csv'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='gateready-emails.csv';a.click();
+    toast('CSV exported!');
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+// SYSTEM
+// ══════════════════════════════════════════════════════════════
+async function loadSystem(){
+  const d=await api('/stats');
+  document.getElementById('sysStats').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;font-size:13px;line-height:2;">
+      <div style="color:#333;">Vendor Accounts</div><div><strong>${d.vendors}</strong></div>
+      <div style="color:#333;">Applications</div><div><strong>${d.applications}</strong></div>
+      <div style="color:#333;">Orders</div><div><strong>${d.orders}</strong></div>
+      <div style="color:#333;">GC Queries Logged</div><div><strong>${d.gc_log.toLocaleString()}</strong></div>
+      <div style="color:#333;">Email Captures</div><div><strong>${d.email_captures}</strong></div>
+      <div style="color:#333;">Active Vendor Sessions</div><div><strong>${d.active_vendor_sessions}</strong></div>
+      <div style="color:#333;">Active Admin Sessions</div><div><strong>${d.active_admin_sessions}</strong></div>
+      <div style="color:#333;">Uptime</div><div><strong>${d.uptime_seconds}s</strong></div>
+      <div style="color:#333;">Node.js</div><div><strong>${d.node_version}</strong></div>
+      <div style="color:#333;">Memory</div><div><strong>${d.memory_mb} MB</strong></div>
+    </div>`;
+}
+
+async function confirmAction(action,label){
+  if(!confirm(`${label}\n\nThis cannot be undone.`))return;
+  const d=await api('/system/'+action,{method:'POST',body:'{}'});
+  if(d.success){toast(d.message||'Done');loadSystem();}
+  else toast(d.error||'Error','error');
+}
+
+function exportAll(){
+  Promise.all([api('/vendors'),api('/orders'),api('/applications'),api('/emails')]).then(([v,o,a,e])=>{
+    const data={vendors:v.vendors,orders:o.orders,applications:a.applications,email_captures:e.emails};
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    const link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download='gateready-export.json';link.click();
+    toast('Export downloaded!');
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+// SALES DATA
+// ══════════════════════════════════════════════════════════════
+let _salesData = null, _salesVendors = [];
+async function loadSales(){
+  const [d, anData] = await Promise.all([api('/sales/summary'), api('/analytics')]);
+  _salesData = d;
+  _salesVendors = d.by_vendor;
+  const avgOrder = d.total_bags > 0 ? (d.total_revenue / (d.monthly.reduce((s,m)=>s+(m.revenue>0?1:0),0)||1)).toFixed(0) : 0;
+  document.getElementById('sl-total-rev').textContent = '$'+d.total_revenue.toLocaleString();
+  document.getElementById('sl-total-bags').textContent = d.total_bags.toLocaleString();
+  document.getElementById('sl-avg-order').textContent = '$'+avgOrder;
+  document.getElementById('sl-saas-mrr').textContent = '$'+anData.saasMonthly+'/mo';
+  renderBarChart('sl-monthly-chart', d.monthly, 'label', 'revenue', 'var(--green)', 'var(--green)', false, true);
+  const revData=[{label:'Bag Sales',count:d.total_revenue},{label:'SaaS MRR',count:anData.saasMonthly*12}];
+  document.getElementById('sl-channel-chart').innerHTML = revData.map(r=>`
+    <div class="chart-row"><div class="chart-lbl">${r.label}</div>
+    <div class="chart-track"><div class="chart-fill" style="width:${(r.count/Math.max(...revData.map(x=>x.count),1)*100).toFixed(0)}%;background:var(--green);"></div></div>
+    <div class="chart-val">$${r.count.toLocaleString()}</div></div>`).join('');
+  renderSalesVendors(_salesVendors);
+}
+
+function renderSalesVendors(list){
+  document.getElementById('salesVendorTable').innerHTML = list.length ? list.map(v=>`
+    <tr>
+      <td><strong>${v.business||v.email}</strong><br><span style="font-size:11px;color:#333;">${v.email}</span></td>
+      <td>${v.order_count}</td>
+      <td>${v.total_bags.toLocaleString()}</td>
+      <td style="color:var(--green);font-family:var(--font-d);font-weight:700;">$${v.total_revenue.toLocaleString()}</td>
+      <td style="font-size:12px;">${v.last_order?fmtDay(v.last_order):'—'}</td>
+      <td><button class="btn btn-ghost" onclick="viewVendorDetail('${v.email}')">→ Detail</button></td>
+    </tr>`).join('') : '<tr><td colspan="6" class="empty">No sales data yet</td></tr>';
+}
+
+function filterSalesVendors(){
+  const q = document.getElementById('salesVendorSearch').value.toLowerCase();
+  renderSalesVendors(_salesVendors.filter(v=>(v.business+v.email).toLowerCase().includes(q)));
+}
+
+// ══════════════════════════════════════════════════════════════
+// VENDOR DETAIL DRAWER
+// ══════════════════════════════════════════════════════════════
+function openDrawer(){
+  document.getElementById('vendorDrawer').classList.add('open');
+  document.getElementById('vendorDrawerOverlay').classList.add('open');
+}
+function closeDrawer(){
+  document.getElementById('vendorDrawer').classList.remove('open');
+  document.getElementById('vendorDrawerOverlay').classList.remove('open');
+}
+
+async function viewVendorDetail(email){
+  document.getElementById('dwr-title').textContent = 'Vendor Profile';
+  document.getElementById('dwr-body').innerHTML = '<div class="empty">Loading...</div>';
+  openDrawer();
+  const [vData, ordData] = await Promise.all([
+    api('/vendors/'+encodeURIComponent(email)),
+    api('/vendors/'+encodeURIComponent(email)+'/orders')
+  ]);
+  const v = vData;
+  const initials = (v.name||'?').split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('dwr-title').textContent = v.business || v.name;
+  document.getElementById('dwr-body').innerHTML = `
+    <div class="vp-header">
+      <div class="vp-avatar">${initials}</div>
+      <div class="vp-meta">
+        <div class="vp-name">${v.name}</div>
+        <div class="vp-biz">${v.business} · ${v.type||'Vendor'} · ${v.city||'—'}</div>
+        <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+          ${v.approved?'<span class="pill pill-green">Approved</span>':'<span class="pill pill-amber">Pending</span>'}
+          ${!v.active?'<span class="pill pill-red">Suspended</span>':'<span class="pill pill-green">Active</span>'}
+          <span class="pill pill-blue">Tier: ${v.tier} bags</span>
+          ${v.embed_plan?`<span class="pill pill-purple">${v.embed_plan}</span>`:''}
+        </div>
+      </div>
+    </div>
+
+    <div class="vp-stats">
+      <div class="vp-stat"><div class="vp-stat-val" style="color:var(--green);">$${ordData.total_revenue.toLocaleString()}</div><div class="vp-stat-lbl">Total Revenue</div></div>
+      <div class="vp-stat"><div class="vp-stat-val">${ordData.order_count}</div><div class="vp-stat-lbl">Orders</div></div>
+      <div class="vp-stat"><div class="vp-stat-val" style="color:#555;">${elapsed(v.last_login)}</div><div class="vp-stat-lbl">Last Login</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;font-size:13px;line-height:2;margin-bottom:20px;">
+      <div style="color:#333;">Email</div><div>${v.email}</div>
+      <div style="color:#333;">Phone</div><div>${v.phone||'—'}</div>
+      <div style="color:#333;">Created</div><div>${fmtDate(v.created)}</div>
+      <div style="color:#333;">Embed Key</div><div>${v.embed_key?`<span class="code">${v.embed_key}</span>`:'<span style="color:#222;">Not assigned</span>'}</div>
+      ${v.notes?`<div style="color:#333;">Notes</div><div>${v.notes}</div>`:''}
+    </div>
+
+    <div class="card-hd" style="padding:0 0 10px;margin-bottom:14px;border-bottom:1px solid #111;"><div class="card-title">Order History</div></div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Invoice</th><th>Qty</th><th>Total</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          ${ordData.orders.length ? ordData.orders.map(o=>`
+            <tr>
+              <td style="font-size:11px;">${fmtDay(o.ts)}</td>
+              <td><span class="code">${o.invoice}</span></td>
+              <td>${o.qty} bags @ $${o.per}</td>
+              <td style="color:var(--green);">$${o.total.toLocaleString()}</td>
+              <td><span class="pill ${o.status==='completed'?'pill-green':o.status==='pending'?'pill-amber':'pill-red'}">${o.status}</span></td>
+              <td><button class="btn btn-danger" style="padding:3px 8px;" onclick="deleteOrder('${o.id}');closeDrawer();loadOrders();">🗑</button></td>
+            </tr>`).join('') : '<tr><td colspan="6" class="empty">No orders yet</td></tr>'}
+        </tbody>
+      </table>
+    </div>
+
+    <hr class="divider">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-ghost" onclick="editVendor('${v.email}');closeDrawer();">Edit Account</button>
+      <button class="btn btn-amber" onclick="resetPasswordFor('${v.email}')">↺ Reset Password</button>
+      <button class="btn btn-blue" onclick="genEmbedKeyFor('${v.email}')">🔑 Gen Embed Key</button>
+      <button class="btn btn-danger" onclick="deleteVendorFor('${v.email}')">🗑 Delete Account</button>
+    </div>`;
+}
+
+async function resetPasswordFor(email){
+  if(!confirm('Reset password for '+email+'?'))return;
+  const d=await api('/vendors/'+encodeURIComponent(email)+'/reset-password',{method:'POST',body:'{}'});
+  if(d.success){toast('New password: '+d.new_password,'success');}
+  else toast(d.error||'Error','error');
+}
+
+async function genEmbedKeyFor(email){
+  const d=await api('/vendors/'+encodeURIComponent(email)+'/gen-key',{method:'POST',body:'{}'});
+  if(d.success){toast('Embed key: '+d.embed_key,'success');viewVendorDetail(email);}
+  else toast(d.error||'Error','error');
+}
+
+async function deleteVendorFor(email){
+  if(!confirm('DELETE account for '+email+'? This cannot be undone.'))return;
+  const d=await api('/vendors/'+encodeURIComponent(email),{method:'DELETE'});
+  if(d.success){closeDrawer();toast('Account deleted','success');loadVendors();}
+  else toast(d.error||'Error','error');
+}
+
+// ══════════════════════════════════════════════════════════════
+// BULK APPLICATION ACTIONS
+// ══════════════════════════════════════════════════════════════
+async function bulkAppAction(action){
+  const checkboxes=document.querySelectorAll('.app-check:checked');
+  if(!checkboxes.length){toast('Select at least one application','error');return;}
+  const ids=[...checkboxes].map(c=>c.dataset.id);
+  if(!confirm(`${action==='approved'?'Approve':'Reject'} ${ids.length} application(s)?`))return;
+  const d=await api('/applications/bulk',{method:'POST',body:JSON.stringify({ids,action})});
+  if(d.success){
+    const created=d.results.filter(r=>r.vendor_created).length;
+    toast(`Done! ${created} vendor account(s) created.`,'success');
+    loadApplications();loadAll();
+  } else toast(d.error||'Error','error');
+}
+
+// Add checkboxes to application table — override loadApplications for bulk support
+async function loadApplications(){
+  const filter=document.getElementById('appStatusFilter').value;
+  const d=await api('/applications');
+  const apps=filter?d.applications.filter(a=>a.status===filter):d.applications;
+  const pending=d.applications.filter(a=>a.status==='pending').length;
+  document.getElementById('pendingBadge').textContent=pending||'0';
+  // Show bulk actions for pending
+  const hasPending=apps.some(a=>a.status==='pending');
+  const bulkBar=document.getElementById('bulkAppBar');
+  if(bulkBar)bulkBar.style.display=hasPending&&!filter?'flex':'none';
+  document.getElementById('appTable').innerHTML=apps.length?apps.map(a=>`
+    <tr>
+      <td>${a.status==='pending'?`<input type="checkbox" class="app-check" data-id="${a.id}" style="accent-color:var(--red);">`:'—'}</td>
+      <td style="font-size:12px;">${fmtDay(a.ts)}</td>
+      <td><strong>${a.business}</strong></td>
+      <td>${a.name}</td>
+      <td style="font-size:12px;">${a.email}</td>
+      <td style="font-size:12px;">${a.city}</td>
+      <td>${a.type}</td>
+      <td>${a.qty}</td>
+      <td><span class="pill ${a.status==='approved'?'pill-green':a.status==='rejected'?'pill-red':'pill-amber'}">${a.status}</span></td>
+      <td style="white-space:nowrap;">
+        ${a.status==='pending'?`<button class="btn btn-green" onclick="appAction('${a.id}','approved')">Approve</button> <button class="btn btn-danger" onclick="appAction('${a.id}','rejected')">Reject</button>`:''}
+        <button class="btn btn-danger" style="margin-left:4px;" onclick="deleteApp('${a.id}')">🗑</button>
+      </td>
+    </tr>`).join(''):'<tr><td colspan="10" class="empty">No applications</td></tr>';
+}
+
+// ══════════════════════════════════════════════════════════════
+// AUTO-REFRESH (30s)
+// ══════════════════════════════════════════════════════════════
+let _autoRefreshTimer = null;
+function startAutoRefresh(){
+  _autoRefreshTimer = setInterval(()=>{
+    const active=document.querySelector('.nav-item.active');
+    if(active)active.click();
+  }, 30000);
+}
+startAutoRefresh();
+
+// ══════════════════════════════════════════════════════════════
+// CHARTS
+// ══════════════════════════════════════════════════════════════
+function renderBarChart(elId,data,labelKey,valKey,color,lastColor,skipEmpty=false,dollar=false){
+  const el=document.getElementById(elId);
+  if(!el)return;
+  const vals=data.map(d=>d[valKey]);
+  const max=Math.max(...vals,1);
+  el.innerHTML=data.filter(d=>!skipEmpty||d[valKey]>0).map((d,i)=>`
+    <div class="chart-row">
+      <div class="chart-lbl" title="${d[labelKey]}">${d[labelKey]}</div>
+      <div class="chart-track"><div class="chart-fill" style="width:${(d[valKey]/max*100).toFixed(0)}%;background:${lastColor&&i===data.length-1?lastColor:color};"></div></div>
+      <div class="chart-val">${dollar?'$':''} ${dollar?d[valKey].toLocaleString():d[valKey]}</div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════════
+loadAll();
+</script>
+</body>
+</html>
