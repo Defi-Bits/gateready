@@ -707,7 +707,7 @@ function nav(el, sec) {
   }
 }
 
-// ── MODALS ─────────────────────────────────────────────────────
+// ── MODALS ────────────────────────────────────────────────────
 function openModal(id){document.getElementById(id).classList.add('open');}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
@@ -1130,7 +1130,7 @@ async function loadSales(){
   const revData=[{label:'Bag Sales',count:d.total_revenue},{label:'SaaS MRR',count:anData.saasMonthly*12}];
   document.getElementById('sl-channel-chart').innerHTML = revData.map(r=>`
     <div class="chart-row"><div class="chart-lbl">${r.label}</div>
-    <div class="chart-track"><div class="chart-fill" style="width:${(r.count/Math.max(...revData.map(x=>x.count),1)*100).toFixed(0)}%;background:var(--green);"></div></div>
+    <div class="chart-track"><div class="chart-fill" style="width:$x(r.count/Math.max(...revData.map(x=>x.count),1)*100).toFixed(0)}%;background:var(--green);"></div></div>
     <div class="chart-val">$${r.count.toLocaleString()}</div></div>`).join('');
   renderSalesVendors(_salesVendors);
 }
