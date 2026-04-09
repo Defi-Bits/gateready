@@ -5,10 +5,22 @@
       "src": "server.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["views/**", "public/**", "data/**", "api/**"]
+        "includeFiles": [
+          "views/**",
+          "public/**",
+          "data/**",
+          "api/**"
+        ]
       }
     }
   ],
-  "routes": [{ "src": "/(.*)", "dest": "/server.js" }],
-  "env": { "NODE_ENV": "production" }
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/server.js"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
