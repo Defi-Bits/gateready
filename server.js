@@ -1,5 +1,5 @@
 /**
- * GateReady™ — Express Server v8 (Vercel-Ready)
+ * GateReadyâ¢ â Express Server v8 (Vercel-Ready)
  * Full site + admin backend + Gate.AI proxy
  */
 
@@ -97,5 +97,7 @@ app.get('/api/admin/sales/summary',requireAdmin,(req,res)=>{const all=[...orders
 app.get('/api/admin/emails',requireAdmin,(req,res)=>res.json(emailCaptures));
 app.get('/api/admin/gc-log,requireAdmin,(req,res)=>{const page=parseInt(req.query.page)||1;const limit=parseInt(req.query.limit)||50;const start=(page-1)*limit;res.json({total:gateCheckLog.length,page,items:gateCheckLog.slice(start,start+limit)});});
 app.use((req,res)=>res.status(404).send(renderPage('home.html')));
-if(process.env.NODE_ENV!=='test'){app.listen(PORT,()=>console.log(`GateReady脢 running → http://localhost:${PORT}`));}
+if(process.env.NODE_ENV!=='test'){app.listen(PORT,()=>console.log(`GateReadyè¢ running â http://localhost:${PORT}`));}
 module.exports=app;
+
+module.exports = app;
