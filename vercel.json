@@ -9,7 +9,7 @@
           "views/**",
           "public/**",
           "data/**",
-          "api/**"
+          "lib/**"
         ]
       }
     }
